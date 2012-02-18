@@ -1,9 +1,10 @@
------ Благими намерениями вымощена дорога в Ад. -----
+**INTRODUCTIONAL TEXT NEEDED HERE!**
 
-Получение pfx из файлов, отдаваемых Яндексом:
+РџРѕР»СѓС‡РµРЅРёРµ pfx РёР· С„Р°Р№Р»РѕРІ, РѕС‚РґР°РІР°РµРјС‹С… РЇРЅРґРµРєСЃРѕРј:
 openssl pkcs12 -in "C:\cert\cert.crt" -inkey "C:\cert\private.key" -export -out C:\cert\account.pfx
 
-OpenSSL берется здесь: http://www.slproweb.com/products/Win32OpenSSL.html
+OpenSSL Р±РµСЂРµС‚СЃСЏ Р·РґРµСЃСЊ: http://www.slproweb.com/products/Win32OpenSSL.html
 
 -----------
-Ветка обсуждения на gotdotnet.ru: http://www.gotdotnet.ru/forums/2/122569/655957
+Р’РµС‚РєР° РѕР±СЃСѓР¶РґРµРЅРёСЏ РЅР° gotdotnet.ru: http://www.gotdotnet.ru/forums/2/122569/655957
+
