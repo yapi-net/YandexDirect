@@ -3,9 +3,9 @@
   <metadata>
     <id>Yandex.Direct</id>
     <version>0.0.0.0</version>
-    <title>Yandex.Direct Library</title>
-    <authors>MAY-MART</authors>
-    <description>Yandex.Direct library.</description>
+    <title>Yandex.Direct API</title>
+    <authors>Yapi.NET Project Contributors</authors>
+    <description>Yandex.Direct API library for .NET.</description>
     <projectUrl>http://yandexdirect.codeplex.com/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>Yandex.Direct Яндекс.Директ Yandex Direct Яндекс Директ API</tags>
