@@ -12,9 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{D371
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Yandex.Direct.Tests", "Yandex.Direct.Tests\Yandex.Direct.Tests.csproj", "{60FEED85-FA4C-4D66-89B9-0C45A9A589B6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{838E5CB0-654B-49F5-8569-D77EC6CC150F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{838E5CB0-654B-49F5-8569-D77EC6CC150F}"
 	ProjectSection(SolutionItems) = preProject
+		BuildPackage.proj = BuildPackage.proj
 		README.md = README.md
+		Yandex.Direct.nuspec = Yandex.Direct.nuspec
 	EndProjectSection
 EndProject
 Global

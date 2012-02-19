@@ -1,4 +1,4 @@
-**INTRODUCTIONAL TEXT NEEDED HERE!**
+﻿**INTRODUCTIONAL TEXT NEEDED HERE!**
 
 Получение pfx из файлов, отдаваемых Яндексом:
 openssl pkcs12 -in "C:\cert\cert.crt" -inkey "C:\cert\private.key" -export -out C:\cert\account.pfx

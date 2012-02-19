@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Yandex.Direct</id>
+    <version>0.0.0.0</version>
+    <title>Yandex.Direct Library</title>
+    <authors>MAY-MART</authors>
+    <description>Yandex.Direct library.</description>
+    <projectUrl>http://yandexdirect.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>Yandex.Direct Яндекс.Директ Yandex Direct Яндекс Директ API</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="4.0.4" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Yandex.Direct\bin\Release\Yandex.Direct.dll" target="lib\net40" />
+    <file src="Yandex.Direct\bin\Release\Yandex.Direct.pdb" target="lib\net40" />
+  </files>
+</package>
