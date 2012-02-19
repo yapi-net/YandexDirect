@@ -5,7 +5,7 @@ using System;
 namespace Yandex.Direct.Tests
 {
     [TestClass]
-    public class ExtensionsTest
+    public class StringMergingTests
     {
         [TestMethod, Description("Merging with null as separator is OK")]
         public void NullSeparatorIsOk()
