@@ -9,7 +9,15 @@ namespace Yandex.Direct
     {
         readonly Dictionary<string, string> _dictionary = new Dictionary<string, string>();
 
-        public void Add(string key, object value, bool dontEscapeArray = false)
+        /// <summary>
+        /// Add key-value pair to parameter collection. 
+        /// Parameters are automatically escaped with "" if needed. 
+        /// Null and empty values are ignored.
+        /// </summary>
+        /// <param name="key">Key to add</param>
+        /// <param name="value">Value to add</param>
+        /// <param name="dontEscapeArray">Specify true, if value can be already jsone-ed array and no escaping is needed</param>
+        public void AddParameter(string key, object value, bool dontEscapeArray = false)
         {
             Contract.Requires<ArgumentException>(!string.IsNullOrEmpty(key));
             if (value == null)
@@ -19,7 +27,9 @@ namespace Yandex.Direct
             if (string.IsNullOrWhiteSpace(strValue))
                 return;
 
-            var escape = dontEscapeArray && (strValue.StartsWith("[") || strValue.StartsWith("{")) || strValue.StartsWith("\"");
+            var escape = dontEscapeArray
+                             ? (strValue.StartsWith("[") || strValue.StartsWith("{"))
+                             : strValue.StartsWith("\"");
             if (escape)
                 _dictionary[key] = strValue;
             else
@@ -32,7 +42,6 @@ namespace Yandex.Direct
         public string BuildRequestBody()
         {
             var merged = _dictionary
-                .Where(x => x.Value != null)
                 .Select(x => string.Format("\"{0}\": {1}", x.Key, x.Value))
                 .Merge(", ");
 

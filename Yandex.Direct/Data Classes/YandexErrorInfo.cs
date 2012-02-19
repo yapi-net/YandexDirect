@@ -12,6 +12,6 @@ namespace Yandex.Direct
         public string Description { get; set; }
 
         [JsonProperty("error_code")]
-        public int Code { get; set; }
+        public YapiService.YapiErrorCode Code { get; set; }
     }
 }

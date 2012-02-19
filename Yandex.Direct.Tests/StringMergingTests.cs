@@ -1,4 +1,5 @@
-﻿using Yandex.Direct;
+﻿using System;
+using Yandex.Direct;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Yandex.Direct.Tests
@@ -6,6 +7,13 @@ namespace Yandex.Direct.Tests
     [TestClass]
     public class StringMergingTests
     {
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod, Description("Trying to merge null-array fails")]
+        public void MergingNullArrayFails()
+        {
+            ((string[]) null).Merge("").ShouldBe("s1s2");
+        }
+
         [TestMethod, Description("Merging with null as separator is OK")]
         public void NullSeparatorIsOk()
         {

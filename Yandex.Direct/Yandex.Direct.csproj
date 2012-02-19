@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data Classes\BannerInfoExtensions.cs" />
+    <Compile Include="Exceptions\YapiCodeServerException.cs" />
     <Compile Include="YapiRequestBuilder.cs" />
     <Compile Include="Data Classes\BannerInfoBase.cs" />
     <Compile Include="Data Classes\BannerInfoWithPhrases.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Data Classes\Reports\StatGoalRequestInfo.cs" />
     <Compile Include="Exceptions\YapiException.cs" />
     <Compile Include="Exceptions\YapiServerException.cs" />
+    <Compile Include="Serialization\YapiSerializer.cs" />
     <Compile Include="YapiService.ApiCommands.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="YapiLanguage.cs" />
@@ -159,7 +161,7 @@
     <Compile Include="YapiTransport.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContractTests.cs" />
+    <Compile Include="ErrorInfoDeserializationTests.cs" />
     <Compile Include="Should.cs" />
     <Compile Include="StringMergingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

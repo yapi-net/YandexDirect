@@ -1,11 +1,10 @@
 using System;
 using System.Runtime.Serialization;
-using System.Security.Permissions;
 
 namespace Yandex.Direct
 {
     [Serializable]
-    public sealed class YapiServerException : YapiException
+    public class YapiServerException : YapiException
     {
         public YapiServerException()
         { }
@@ -18,8 +17,7 @@ namespace Yandex.Direct
             : base(message, inner)
         { }
 
-        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
-        private YapiServerException(SerializationInfo info, StreamingContext context)
+        protected YapiServerException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         { }
     }
