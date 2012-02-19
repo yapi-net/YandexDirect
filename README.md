@@ -1,2 +1,1 @@
-﻿**INTRODUCTIONAL TEXT NEEDED HERE!**
-Link to wiki here
+﻿[Installation and usage](https://github.com/yapi-net/YandexDirect/wiki)
