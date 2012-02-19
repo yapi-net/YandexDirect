@@ -1,6 +1,5 @@
 ﻿using Yandex.Direct;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace Yandex.Direct.Tests
 {

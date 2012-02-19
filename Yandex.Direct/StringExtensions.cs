@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Yandex.Direct
 {
-    internal static class Extensions
+    internal static class StringExtensions
     {
         public static string Merge(this IEnumerable< string> strings, string separator = null)
         {
