@@ -14,7 +14,11 @@ namespace Yandex.Direct.Serialization
                     {
                         NullValueHandling = NullValueHandling.Ignore,
                         DefaultValueHandling = DefaultValueHandling.Ignore,
-                        Converters = {new IsoDateTimeConverter {DateTimeFormat = "yyyy-MM-dd"}}
+                        Converters =
+                            {
+                                new IsoDateTimeConverter {DateTimeFormat = "yyyy-MM-dd"},
+                                new StringEnumConverter(),
+                            }
                     };
         }
 

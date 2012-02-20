@@ -12,14 +12,13 @@ namespace Yandex.Direct
     internal sealed class YapiTransport
     {
         public YapiSettings Setting { get; private set; }
-        private YapiSerializer _serializer;
+        private readonly YapiSerializer _serializer;
 
         public YapiTransport(YapiSettings yapiSettings)
         {
             this.Setting = yapiSettings;
             this._serializer = new YapiSerializer();
         }
-
 
         public T Request<T>(YapiService.ApiCommand method, object requestData = null, bool sign = false)
         {
