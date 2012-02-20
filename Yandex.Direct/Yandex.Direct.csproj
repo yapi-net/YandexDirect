@@ -117,7 +117,6 @@
     <Compile Include="Serialization\YesNoArrayConverter.cs" />
     <Compile Include="Serialization\YesNoBooleanConverter.cs" />
     <Compile Include="Data Classes\Enums\ActivatingStatus.cs" />
-    <Compile Include="Data Classes\Enums\BooleanType.cs" />
     <Compile Include="Data Classes\CampaignBidsInfo.cs" />
     <Compile Include="Data Classes\Enums\DateGroupingType.cs" />
     <Compile Include="Data Classes\Enums\ModerationStatus.cs" />
