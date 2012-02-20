@@ -97,6 +97,8 @@
   <ItemGroup>
     <Compile Include="Data Classes\BannerInfoExtensions.cs" />
     <Compile Include="Exceptions\YapiCodeServerException.cs" />
+    <Compile Include="Exceptions\YapiConfigurationException.cs" />
+    <Compile Include="YapiAuthType.cs" />
     <Compile Include="YapiRequestBuilder.cs" />
     <Compile Include="Data Classes\BannerInfoBase.cs" />
     <Compile Include="Data Classes\BannerInfoWithPhrases.cs" />
