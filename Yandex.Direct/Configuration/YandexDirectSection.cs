@@ -54,7 +54,7 @@ namespace Yandex.Direct.Configuration
         /// <summary>
         /// Путь к файлу с сертификатом
         /// </summary>
-        [ConfigurationProperty(CertificatePathFieldName, IsRequired = true)]
+        [ConfigurationProperty(CertificatePathFieldName, IsRequired = false)]
         public string CertificatePath
         {
             get { return (string)this[CertificatePathFieldName]; }
