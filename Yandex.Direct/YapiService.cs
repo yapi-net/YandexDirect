@@ -336,15 +336,17 @@ namespace Yandex.Direct
             return CreateOrUpdateBanners(new[] { banner }).FirstOrDefault();
         }
 
-        public List<int> CreateOrUpdateBanners(EditableBannerInfo[] banners)
+        public List<int> CreateOrUpdateBanners(IEnumerable<EditableBannerInfo> banners)
         {
-            if (banners == null || banners.Length == 0)
+            if (banners == null)
                 throw new ArgumentNullException("banners");
 
-            if (banners.Contains(null))
+            var bannersArray = banners.ToArray();
+
+            if (bannersArray.Contains(null))
                 throw new ArgumentNullException("banners", "One of the items is null.");
 
-            return Request<List<int>>(ApiCommand.CreateOrUpdateBanners, banners);
+            return Request<List<int>>(ApiCommand.CreateOrUpdateBanners, bannersArray);
         }
 
         #endregion

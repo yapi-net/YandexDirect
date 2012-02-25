@@ -30,7 +30,7 @@ namespace Yandex.Direct
             return editable;
         }
 
-        public static List<EditableBannerPhraseInfo> ToEditable(this IEnumerable<BannerPhraseInfo> phrases)
+        public static IEnumerable<EditableBannerPhraseInfo> ToEditable(this IEnumerable<BannerPhraseInfo> phrases)
         {
             if (phrases == null)
                 throw new ArgumentNullException("phrases");
@@ -38,15 +38,8 @@ namespace Yandex.Direct
             return phrases.Select(phrase => phrase.ToEditable()).ToList();
         }
 
-        public static List<EditableBannerPhraseInfo> ToEditable(this IEnumerable<BannerPhraseInfoWithStats> phrases)
-        {
-            if (phrases == null)
-                throw new ArgumentNullException("phrases");
-
-            return phrases.Select(phrase => phrase.ToEditable()).ToList();
-        }
-
-        public static EditableBannerInfo ToEditable(this BannerInfoWithPhrases<BannerPhraseInfo> banner)
+        public static EditableBannerInfo ToEditable<T>(this BannerInfoWithPhrases<T> banner)
+            where T : BannerPhraseInfo
         {
             if (banner == null)
                 throw new ArgumentNullException("banner");
@@ -67,46 +60,13 @@ namespace Yandex.Direct
             editable.SiteLinks = banner.SiteLinks; //TODO: Copy
             editable.MinusKeywords = banner.MinusKeywords; //TODO: Copy
 
-            editable.Phrases = banner.Phrases.ToEditable();
+            editable.Phrases = banner.Phrases.ToEditable().ToList();
 
             return editable;
         }
 
-        public static EditableBannerInfo ToEditable(this BannerInfoWithPhrases<BannerPhraseInfoWithStats> banner)
-        {
-            if (banner == null)
-                throw new ArgumentNullException("banner");
-
-            var editable = new EditableBannerInfo();
-
-            editable.BannerId = banner.BannerId;
-            editable.CampaignId = banner.CampaignId;
-
-            editable.Title = banner.Title;
-            editable.Text = banner.Text;
-            editable.Href = banner.Href;
-
-            editable.Geo = banner.Geo;
-
-            editable.ContactInfo = banner.ContactInfo; //TODO: Copy
-
-            editable.SiteLinks = banner.SiteLinks; //TODO: Copy
-            editable.MinusKeywords = banner.MinusKeywords; //TODO: Copy
-
-            editable.Phrases = banner.Phrases.ToEditable();
-
-            return editable;
-        }
-
-        public static List<EditableBannerInfo> ToEditable(this IEnumerable<BannerInfoWithPhrases<BannerPhraseInfo>> banners)
-        {
-            if (banners == null)
-                throw new ArgumentNullException("banners");
-
-            return banners.Select(banner => banner.ToEditable()).ToList();
-        }
-
-        public static List<EditableBannerInfo> ToEditable(this IEnumerable<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> banners)
+        public static IEnumerable<EditableBannerInfo> ToEditable<T>(this IEnumerable<BannerInfoWithPhrases<T>> banners)
+            where T : BannerPhraseInfo
         {
             if (banners == null)
                 throw new ArgumentNullException("banners");
