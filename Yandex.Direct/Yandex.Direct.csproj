@@ -31,8 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.0.4\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.0.8.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.4.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -43,8 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data Classes\BannerInfoExtensions.cs" />
+    <Compile Include="Data Classes\BannerInfoBase.cs" />
+    <Compile Include="Data Classes\BannerInfoWithPhrases.cs" />
+    <Compile Include="Data Classes\BannerPhraseInfoBase.cs" />
+    <Compile Include="Data Classes\BannerPhraseInfoWithStats.cs" />
     <Compile Include="Data Classes\ContactInfo.cs" />
+    <Compile Include="Data Classes\EditableBannerInfo.cs" />
+    <Compile Include="Data Classes\EditableBannerPhraseInfo.cs" />
     <Compile Include="Data Classes\Enums\AutoBudgetPriority.cs" />
+    <Compile Include="Data Classes\Enums\InstantMessagingClient.cs" />
     <Compile Include="Data Classes\MapPoint.cs" />
     <Compile Include="Data Classes\RejectReason.cs" />
     <Compile Include="Data Classes\Enums\RejectReasonType.cs" />
@@ -80,7 +89,6 @@
     <Compile Include="Configuration\YandexDirectSection.cs" />
     <Compile Include="Data Classes\BannerInfo.cs" />
     <Compile Include="Data Classes\BannerPhraseInfo.cs" />
-    <Compile Include="Data Classes\BannerRequestInfo.cs" />
     <Compile Include="Data Classes\ClientUnitInfo.cs" />
     <Compile Include="Data Classes\ShortCampaignInfo.cs" />
     <Compile Include="Data Classes\ShortClientInfo.cs" />

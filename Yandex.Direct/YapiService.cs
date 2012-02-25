@@ -1,16 +1,14 @@
-﻿#region Usings
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
-using System.IO;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-#endregion
 
 namespace Yandex.Direct
 {
@@ -191,31 +189,160 @@ namespace Yandex.Direct
 
         #region Ads and phrases
 
-        public List<BannerInfo> GetBannersForCampaign(int campaignId, PhraseInfoType phraseDetails = PhraseInfoType.WithPrices)
+        public BannerInfo GetBanner(int bannerId)
         {
-            var request = new BannerRequestInfo { CampaignId = new[] { campaignId }, GetPhrases = phraseDetails };
-            return Request<List<BannerInfo>>(ApiCommand.GetBanners, request);
+            return GetBanners(new[] { bannerId }).FirstOrDefault();
         }
 
-        public BannerInfo GetBannerById(int bannerId, PhraseInfoType phraseDetails = PhraseInfoType.WithPrices)
+        public BannerInfoWithPhrases<BannerPhraseInfo> GetBannerWithPhrases(BannerInfo banner)
         {
-            return GetBannersByIds(new[] { bannerId }, phraseDetails).FirstOrDefault();
+            if (banner == null)
+                throw new ArgumentNullException("banner");
+
+            return GetBannerWithPhrases(banner.BannerId);
         }
 
-        public List<BannerInfo> GetBannersByIds(int[] bannerIds, PhraseInfoType phraseDetails = PhraseInfoType.WithPrices)
+        public BannerInfoWithPhrases<BannerPhraseInfo> GetBannerWithPhrases(int bannerId)
+        {
+            return GetBannersWithPhrases(new[] { bannerId }).FirstOrDefault();
+        }
+
+        public BannerInfoWithPhrases<BannerPhraseInfoWithStats> GetBannerWithPhrasesAndStats(BannerInfo banner)
+        {
+            if (banner == null)
+                throw new ArgumentNullException("banner");
+
+            return GetBannerWithPhrasesAndStats(banner.BannerId);
+        }
+
+        public BannerInfoWithPhrases<BannerPhraseInfoWithStats> GetBannerWithPhrasesAndStats(int bannerId)
+        {
+            return GetBannersWithPhrasesAndStats(new[] { bannerId }).FirstOrDefault();
+        }
+
+        public List<BannerInfo> GetBanners(int[] bannerIds)
         {
             if (bannerIds == null || bannerIds.Length == 0)
                 throw new ArgumentNullException("bannerIds");
 
-            var request = new BannerRequestInfo { BannerIds = bannerIds, GetPhrases = phraseDetails };
+            if (bannerIds.Length > 2000)
+                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
 
-            return Request<List<BannerInfo>>(ApiCommand.GetBanners, request);
+            return GetBannersInternal<BannerInfo>(null, bannerIds, PhraseInfoType.No);
         }
 
-        public List<int> CreateOrUpdateBanners(params BannerInfo[] banners)
+        public List<BannerInfoWithPhrases<BannerPhraseInfo>> GetBannersWithPhrases(int[] bannerIds)
+        {
+            if (bannerIds == null || bannerIds.Length == 0)
+                throw new ArgumentNullException("bannerIds");
+
+            if (bannerIds.Length > 2000)
+                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
+
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfo>>(null, bannerIds, PhraseInfoType.Yes);
+        }
+
+        public List<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> GetBannersWithPhrasesAndStats(int[] bannerIds)
+        {
+            if (bannerIds == null || bannerIds.Length == 0)
+                throw new ArgumentNullException("bannerIds");
+
+            if (bannerIds.Length > 2000)
+                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
+
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfoWithStats>>(null, bannerIds, PhraseInfoType.WithPrices);
+        }
+
+        public List<BannerInfo> GetBannersForCampaign(int campaignId)
+        {
+            return GetBannersInternal<BannerInfo>(new[] { campaignId }, null, PhraseInfoType.No);
+        }
+
+        public List<BannerInfoWithPhrases<BannerPhraseInfo>> GetBannersForCampaignWithPhrases(int campaignId)
+        {
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfo>>(new[] { campaignId }, null, PhraseInfoType.Yes);
+        }
+
+        public List<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> GetBannersForCampaignWithPhrasesAndStats(int campaignId)
+        {
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfoWithStats>>(new[] { campaignId }, null, PhraseInfoType.WithPrices);
+        }
+
+        private List<T> GetBannersInternal<T>(int[] campaingIds, int[] bannerIds, PhraseInfoType phraseDetails)
+            where T : BannerInfo
+        {
+            var request = new { CampaignIDS = campaingIds, BannerIDS = bannerIds, GetPhrases = phraseDetails };
+
+            return Request<List<T>>(ApiCommand.GetBanners, request);
+        }
+
+        public List<BannerPhraseInfo> GetBannerPhrases(BannerInfo banner, bool considerTimeTarget = false)
+        {
+            if (banner == null)
+                throw new ArgumentNullException("banner");
+
+            return GetBannerPhrases(banner.BannerId, considerTimeTarget);
+        }
+
+        public List<BannerPhraseInfoWithStats> GetBannerPhrasesWithStats(BannerInfo banner, bool considerTimeTarget = false)
+        {
+            if (banner == null)
+                throw new ArgumentNullException("banner");
+
+            return GetBannerPhrasesWithStats(banner.BannerId, considerTimeTarget);
+        }
+
+        public List<BannerPhraseInfo> GetBannerPhrases(int bannerId, bool considerTimeTarget = false)
+        {
+            return GetBannerPhrases(new[] { bannerId }, considerTimeTarget);
+        }
+
+        public List<BannerPhraseInfoWithStats> GetBannerPhrasesWithStats(int bannerId, bool considerTimeTarget = false)
+        {
+            return GetBannerPhrasesWithStats(new[] { bannerId }, considerTimeTarget);
+        }
+
+        public List<BannerPhraseInfo> GetBannerPhrases(int[] bannerIds, bool considerTimeTarget = false)
+        {
+            if (bannerIds == null || bannerIds.Length == 0)
+                throw new ArgumentNullException("bannerIds");
+
+            if (bannerIds.Length > 1000)
+                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 1000.");
+
+            var request = new { BannerIDS = bannerIds, RequestPrices = "No", ConsiderTimeTarget = considerTimeTarget ? "Yes" : "No" };
+
+            return Request<List<BannerPhraseInfo>>(ApiCommand.GetBannerPhrasesFilter, request);
+        }
+
+        public List<BannerPhraseInfoWithStats> GetBannerPhrasesWithStats(int[] bannerIds, bool considerTimeTarget = false)
+        {
+            if (bannerIds == null || bannerIds.Length == 0)
+                throw new ArgumentNullException("bannerIds");
+
+            if (bannerIds.Length > 1000)
+                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 1000.");
+
+            var request = new { BannerIDS = bannerIds, RequestPrices = "Yes", ConsiderTimeTarget = considerTimeTarget ? "Yes" : "No" };
+
+            return Request<List<BannerPhraseInfoWithStats>>(ApiCommand.GetBannerPhrasesFilter, request);
+        }
+
+        public int CreateOrUpdateBanner(EditableBannerInfo banner)
+        {
+            if (banner == null)
+                throw new ArgumentNullException("banner");
+
+            return CreateOrUpdateBanners(new[] { banner }).FirstOrDefault();
+        }
+
+        public List<int> CreateOrUpdateBanners(EditableBannerInfo[] banners)
         {
             if (banners == null || banners.Length == 0)
                 throw new ArgumentNullException("banners");
+
+            if (banners.Contains(null))
+                throw new ArgumentNullException("banners", "One of the items is null.");
 
             return Request<List<int>>(ApiCommand.CreateOrUpdateBanners, banners);
         }
@@ -334,6 +461,5 @@ namespace Yandex.Direct
         }
 
         #endregion
-
     }
 }
