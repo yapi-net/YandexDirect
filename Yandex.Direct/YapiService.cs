@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
 {
@@ -220,7 +221,7 @@ namespace Yandex.Direct
             return GetBannersWithPhrasesAndStats(new[] { bannerId }).FirstOrDefault();
         }
 
-        public List<BannerInfo> GetBanners(int[] bannerIds)
+        public List<BannerInfo> GetBanners(int[] bannerIds, BannersFilterInfo filter = null)
         {
             if (bannerIds == null || bannerIds.Length == 0)
                 throw new ArgumentNullException("bannerIds");
@@ -228,10 +229,10 @@ namespace Yandex.Direct
             if (bannerIds.Length > 2000)
                 throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
 
-            return GetBannersInternal<BannerInfo>(null, bannerIds, PhraseInfoType.No);
+            return GetBannersInternal<BannerInfo>(null, bannerIds, PhraseInfoType.No, filter);
         }
 
-        public List<BannerInfoWithPhrases<BannerPhraseInfo>> GetBannersWithPhrases(int[] bannerIds)
+        public List<BannerInfoWithPhrases<BannerPhraseInfo>> GetBannersWithPhrases(int[] bannerIds, BannersFilterInfo filter = null)
         {
             if (bannerIds == null || bannerIds.Length == 0)
                 throw new ArgumentNullException("bannerIds");
@@ -239,10 +240,10 @@ namespace Yandex.Direct
             if (bannerIds.Length > 2000)
                 throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
 
-            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfo>>(null, bannerIds, PhraseInfoType.Yes);
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfo>>(null, bannerIds, PhraseInfoType.Yes, filter);
         }
 
-        public List<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> GetBannersWithPhrasesAndStats(int[] bannerIds)
+        public List<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> GetBannersWithPhrasesAndStats(int[] bannerIds, BannersFilterInfo filter = null)
         {
             if (bannerIds == null || bannerIds.Length == 0)
                 throw new ArgumentNullException("bannerIds");
@@ -250,28 +251,28 @@ namespace Yandex.Direct
             if (bannerIds.Length > 2000)
                 throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
 
-            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfoWithStats>>(null, bannerIds, PhraseInfoType.WithPrices);
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfoWithStats>>(null, bannerIds, PhraseInfoType.WithPrices, filter);
         }
 
-        public List<BannerInfo> GetBannersForCampaign(int campaignId)
+        public List<BannerInfo> GetBannersForCampaign(int campaignId, BannersFilterInfo filter = null)
         {
-            return GetBannersInternal<BannerInfo>(new[] { campaignId }, null, PhraseInfoType.No);
+            return GetBannersInternal<BannerInfo>(new[] { campaignId }, null, PhraseInfoType.No, filter);
         }
 
-        public List<BannerInfoWithPhrases<BannerPhraseInfo>> GetBannersForCampaignWithPhrases(int campaignId)
+        public List<BannerInfoWithPhrases<BannerPhraseInfo>> GetBannersForCampaignWithPhrases(int campaignId, BannersFilterInfo filter = null)
         {
-            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfo>>(new[] { campaignId }, null, PhraseInfoType.Yes);
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfo>>(new[] { campaignId }, null, PhraseInfoType.Yes, filter);
         }
 
-        public List<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> GetBannersForCampaignWithPhrasesAndStats(int campaignId)
+        public List<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> GetBannersForCampaignWithPhrasesAndStats(int campaignId, BannersFilterInfo filter = null)
         {
-            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfoWithStats>>(new[] { campaignId }, null, PhraseInfoType.WithPrices);
+            return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfoWithStats>>(new[] { campaignId }, null, PhraseInfoType.WithPrices, filter);
         }
 
-        private List<T> GetBannersInternal<T>(int[] campaingIds, int[] bannerIds, PhraseInfoType phraseDetails)
+        private List<T> GetBannersInternal<T>(int[] campaingIds, int[] bannerIds, PhraseInfoType phraseDetails, BannersFilterInfo filter)
             where T : BannerInfo
         {
-            var request = new { CampaignIDS = campaingIds, BannerIDS = bannerIds, GetPhrases = phraseDetails };
+            var request = new { CampaignIDS = campaingIds, BannerIDS = bannerIds, GetPhrases = phraseDetails, Filter = filter };
 
             return Request<List<T>>(ApiCommand.GetBanners, request);
         }
@@ -310,7 +311,7 @@ namespace Yandex.Direct
             if (bannerIds.Length > 1000)
                 throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 1000.");
 
-            var request = new { BannerIDS = bannerIds, RequestPrices = "No", ConsiderTimeTarget = considerTimeTarget ? "Yes" : "No" };
+            var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.No, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
             return Request<List<BannerPhraseInfo>>(ApiCommand.GetBannerPhrasesFilter, request);
         }
@@ -323,7 +324,7 @@ namespace Yandex.Direct
             if (bannerIds.Length > 1000)
                 throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 1000.");
 
-            var request = new { BannerIDS = bannerIds, RequestPrices = "Yes", ConsiderTimeTarget = considerTimeTarget ? "Yes" : "No" };
+            var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.Yes, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
             return Request<List<BannerPhraseInfoWithStats>>(ApiCommand.GetBannerPhrasesFilter, request);
         }

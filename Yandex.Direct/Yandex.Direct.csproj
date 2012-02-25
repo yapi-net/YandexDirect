@@ -49,6 +49,7 @@
     <Compile Include="Data Classes\BannerInfoWithPhrases.cs" />
     <Compile Include="Data Classes\BannerPhraseInfoBase.cs" />
     <Compile Include="Data Classes\BannerPhraseInfoWithStats.cs" />
+    <Compile Include="Data Classes\BannersFilterInfo.cs" />
     <Compile Include="Data Classes\ContactInfo.cs" />
     <Compile Include="Data Classes\EditableBannerInfo.cs" />
     <Compile Include="Data Classes\EditableBannerPhraseInfo.cs" />
@@ -59,6 +60,8 @@
     <Compile Include="Data Classes\Enums\RejectReasonType.cs" />
     <Compile Include="Data Classes\PhraseCoverageInfo.cs" />
     <Compile Include="Data Classes\PhraseUserParams.cs" />
+    <Compile Include="Serialization\YesNo.cs" />
+    <Compile Include="Serialization\YesNoArrayConverter.cs" />
     <Compile Include="Serialization\YesNoBooleanConverter.cs" />
     <Compile Include="Data Classes\Enums\ActivatingStatus.cs" />
     <Compile Include="Data Classes\Enums\BooleanType.cs" />
