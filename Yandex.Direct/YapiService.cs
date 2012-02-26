@@ -195,7 +195,7 @@ namespace Yandex.Direct
         {
             var request = new { CampaignIDS = campaingIds, BannerIDS = bannerIds, GetPhrases = phraseDetails, Filter = filter };
 
-            return Request<List<T>>(ApiCommand.GetBanners, request);
+            return YapiTransport.Request<List<T>>(ApiCommand.GetBanners, request);
         }
 
         public List<BannerPhraseInfo> GetBannerPhrases(BannerInfo banner, bool considerTimeTarget = false)
@@ -234,7 +234,7 @@ namespace Yandex.Direct
 
             var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.No, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
-            return Request<List<BannerPhraseInfo>>(ApiCommand.GetBannerPhrasesFilter, request);
+            return YapiTransport.Request<List<BannerPhraseInfo>>(ApiCommand.GetBannerPhrasesFilter, request);
         }
 
         public List<BannerPhraseInfoWithStats> GetBannerPhrasesWithStats(int[] bannerIds, bool considerTimeTarget = false)
@@ -247,7 +247,7 @@ namespace Yandex.Direct
 
             var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.Yes, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
-            return Request<List<BannerPhraseInfoWithStats>>(ApiCommand.GetBannerPhrasesFilter, request);
+            return YapiTransport.Request<List<BannerPhraseInfoWithStats>>(ApiCommand.GetBannerPhrasesFilter, request);
         }
 
         public int CreateOrUpdateBanner(EditableBannerInfo banner)
@@ -268,7 +268,7 @@ namespace Yandex.Direct
             if (bannersArray.Contains(null))
                 throw new ArgumentNullException("banners", "One of the items is null.");
 
-            return Request<List<int>>(ApiCommand.CreateOrUpdateBanners, bannersArray);
+            return YapiTransport.Request<List<int>>(ApiCommand.CreateOrUpdateBanners, bannersArray);
         }
 
         #endregion

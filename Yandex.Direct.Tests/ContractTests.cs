@@ -6,20 +6,20 @@ namespace Yandex.Direct.Tests
     [TestClass]
     public class ContractTests
     {
-        [ExpectedException(typeof(ArgumentException))]
-        [TestMethod, Description("Calling GetBannersByIds with null bannerIds fails")]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [TestMethod, Description("Calling GetForecast with negative parameter should fail")]
         public void GetBannersByIdsWithNullBannerIdsShouldFail()
         {
             var service = new YapiService();
-            service.GetBannersByIds(null);
+            service.GetForecast(-1);
         }
 
         [ExpectedException(typeof(ArgumentException))]
-        [TestMethod, Description("Calling GetBannersByIds with empty bannerIds fails")]
+        [TestMethod, Description("Calling DeleteBanners with empty bannerIds fails")]
         public void GetBannersByIdsWithEmptyBannerIdsShouldFail()
         {
             var service = new YapiService();
-            service.GetBannersByIds(new int[0]);
+            service.DeleteBanners(1, new int[0]);
         }
     }
 }
