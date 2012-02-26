@@ -22,7 +22,7 @@ namespace Yandex.Direct.Configuration
                     var exeConfiguration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
                     Instance = exeConfiguration.GetSection(SectionPath) as YandexDirectSection;
                     if (Instance == null)
-                        throw new ConfigurationErrorsException(SectionPath + " not found in configuration file");
+                        throw new YapiConfigurationException(string.Format("Section \"{0}\" was not found in configuration file", SectionPath));
                 }
 
                 return Instance;
@@ -54,7 +54,7 @@ namespace Yandex.Direct.Configuration
         /// <summary>
         /// Путь к файлу с сертификатом
         /// </summary>
-        [ConfigurationProperty(CertificatePathFieldName, IsRequired = true)]
+        [ConfigurationProperty(CertificatePathFieldName, IsRequired = false)]
         public string CertificatePath
         {
             get { return (string)this[CertificatePathFieldName]; }
@@ -107,6 +107,54 @@ namespace Yandex.Direct.Configuration
         {
             get { return (string)this[LoginFieldName]; }
             set { this[LoginFieldName] = value; }
+        }
+
+        #endregion
+
+        #region string AuthType
+
+        private const string AuthTypeName = "authType";
+
+        /// <summary>
+        /// OAuth2 Yandex token
+        /// </summary>
+        [ConfigurationProperty(AuthTypeName, IsRequired = true)]
+        public YapiAuthType AuthType
+        {
+            get { return (YapiAuthType)this[AuthTypeName]; }
+            set { this[AuthTypeName] = value; }
+        }
+
+        #endregion
+
+        #region string Token
+
+        private const string TokenFieldName = "token";
+
+        /// <summary>
+        /// OAuth2 Yandex token
+        /// </summary>
+        [ConfigurationProperty(TokenFieldName, IsRequired = false)]
+        public string Token
+        {
+            get { return (string)this[TokenFieldName]; }
+            set { this[TokenFieldName] = value; }
+        }
+
+        #endregion
+
+        #region string ApplicationId
+
+        private const string ApplicationIdFieldName = "applicationId";
+
+        /// <summary>
+        /// Yandex developer API key
+        /// </summary>
+        [ConfigurationProperty(ApplicationIdFieldName, IsRequired = false)]
+        public string ApplicationId
+        {
+            get { return (string)this[ApplicationIdFieldName]; }
+            set { this[ApplicationIdFieldName] = value; }
         }
 
         #endregion
