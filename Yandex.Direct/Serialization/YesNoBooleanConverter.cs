@@ -13,13 +13,19 @@ namespace Yandex.Direct.Serialization
             if (value == null)
             {
                 writer.WriteNull();
-                return;
             }
             else
             {
-                bool boolValue = (bool)value;
-
-                writer.WriteValue(boolValue ? "Yes" : "No");
+                if (value is bool)
+                {
+                    writer.WriteValue(new YesNo((bool)value).ToString());
+                }
+                else if (value is YesNo)
+                {
+                    writer.WriteValue(((YesNo)value).ToString());
+                }
+                else
+                    throw new NotSupportedException("Unsupported value type. Supported types are System.Boolean and YesNo.");
             }
         }
 
@@ -27,7 +33,7 @@ namespace Yandex.Direct.Serialization
         {
             if (reader.TokenType == JsonToken.Null)
             {
-                if (objectType == typeof(bool?))
+                if (objectType == typeof(bool?) || objectType == typeof(YesNo?))
                 {
                     return null;
                 }
@@ -35,16 +41,20 @@ namespace Yandex.Direct.Serialization
                     throw new Exception("Cannot convert null value to System.Boolean.");
             }
 
-            if (reader.TokenType == JsonToken.String)
-            {
-                switch (reader.Value.ToString().ToLowerInvariant())
-                {
-                    case "yes":
-                        return true;
+            YesNo value;
 
-                    case "no":
-                        return false;
+            if (reader.TokenType == JsonToken.String && YesNo.TryParse(reader.Value.ToString(), out value))
+            {
+                if (objectType == typeof(bool) || objectType == typeof(bool?))
+                {
+                    return (bool)value;
                 }
+                else if (objectType == typeof(YesNo) || objectType == typeof(YesNo?))
+                {
+                    return value;
+                }
+                else
+                    throw new NotSupportedException("Unsupported value type. Supported types are System.Boolean and YesNo.");
             }
 
             throw new Exception("Unexpected token. Expected Yes/No.");
@@ -52,7 +62,7 @@ namespace Yandex.Direct.Serialization
 
         public override bool CanConvert(Type objectType)
         {
-            return objectType == typeof(bool) || objectType == typeof(bool?);
+            return objectType == typeof(bool) || objectType == typeof(bool?) || objectType == typeof(YesNo) || objectType == typeof(YesNo?);
         }
     }
 }

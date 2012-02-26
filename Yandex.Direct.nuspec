@@ -10,7 +10,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>Yandex.Direct Яндекс.Директ Yandex Direct Яндекс Директ API</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="4.0.4" />
+      <dependency id="Newtonsoft.Json" version="4.0.8" />
     </dependencies>
   </metadata>
   <files>
