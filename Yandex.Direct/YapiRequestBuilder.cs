@@ -41,11 +41,8 @@ namespace Yandex.Direct
         /// </summary>
         public string BuildRequestBody()
         {
-            var merged = _dictionary
-                .Select(x => string.Format("\"{0}\": {1}", x.Key, x.Value))
-                .Merge(", ");
-
-            return string.Format("{{{0}}}", merged);
+            var merged = _dictionary.Select(x => string.Format("\"{0}\": {1}", x.Key, x.Value));
+            return string.Format("{{{0}}}", string.Join(", ", merged));
         }
     }
 }

@@ -20,6 +20,6 @@ namespace Yandex.Direct
 
         [JsonProperty("StatusArch")]
         [JsonConverter(typeof(YesNoBooleanConverter))]
-        public bool IsArchive { get; set; }
+        public bool StatusArchive { get; set; }
     }
 }

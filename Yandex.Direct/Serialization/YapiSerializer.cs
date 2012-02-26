@@ -22,12 +22,12 @@ namespace Yandex.Direct.Serialization
                     };
         }
 
-        public T DeserializeObject<T>(string jsonString)
+        public T Deserialize<T>(string jsonString)
         {
             return JsonConvert.DeserializeObject<T>(jsonString, JsonSettings);
         }
 
-        public string SerializeToJson(object obj)
+        public string Serialize(object obj)
         {
             return JsonConvert.SerializeObject(obj, Formatting.None, JsonSettings);
         }

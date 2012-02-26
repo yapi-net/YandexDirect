@@ -141,7 +141,6 @@
     <Compile Include="Exceptions\YapiServerException.cs" />
     <Compile Include="Serialization\YapiSerializer.cs" />
     <Compile Include="YapiService.ApiCommands.cs" />
-    <Compile Include="StringExtensions.cs" />
     <Compile Include="YapiLanguage.cs" />
     <Compile Include="YapiSettings.cs" />
     <Compile Include="Configuration\YandexDirectSection.cs" />

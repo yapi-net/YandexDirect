@@ -16,7 +16,7 @@ namespace Yandex.Direct.Tests
 
         static T Deserialize<T>(string jsonString)
         {
-            return new YapiSerializer().DeserializeObject<T>(jsonString);
+            return new YapiSerializer().Deserialize<T>(jsonString);
         }
 
         [TestMethod]
