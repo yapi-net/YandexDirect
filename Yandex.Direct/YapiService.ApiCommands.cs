@@ -142,6 +142,5 @@
             // Other
             LoginDoesNotExist = 251
         }
-
     }
 }

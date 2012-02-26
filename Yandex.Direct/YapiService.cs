@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
@@ -42,7 +37,6 @@ namespace Yandex.Direct
         { }
 
         #endregion
-
 
         #region PingApi
 
@@ -118,8 +112,7 @@ namespace Yandex.Direct
 
         public BannerInfoWithPhrases<BannerPhraseInfo> GetBannerWithPhrases(BannerInfo banner)
         {
-            if (banner == null)
-                throw new ArgumentNullException("banner");
+            Contract.Requires<ArgumentNullException>(banner != null, "banner");
 
             return GetBannerWithPhrases(banner.BannerId);
         }
@@ -131,8 +124,7 @@ namespace Yandex.Direct
 
         public BannerInfoWithPhrases<BannerPhraseInfoWithStats> GetBannerWithPhrasesAndStats(BannerInfo banner)
         {
-            if (banner == null)
-                throw new ArgumentNullException("banner");
+            Contract.Requires<ArgumentNullException>(banner != null, "banner");
 
             return GetBannerWithPhrasesAndStats(banner.BannerId);
         }
@@ -144,33 +136,24 @@ namespace Yandex.Direct
 
         public List<BannerInfo> GetBanners(int[] bannerIds, BannersFilterInfo filter = null)
         {
-            if (bannerIds == null || bannerIds.Length == 0)
-                throw new ArgumentNullException("bannerIds");
-
-            if (bannerIds.Length > 2000)
-                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
+            Contract.Requires<ArgumentException>(bannerIds != null && bannerIds.Any(), "bannerIds");
+            Contract.Requires<ArgumentOutOfRangeException>(bannerIds.Length <= 2000, "Maximum allowed number of identifiers per call is 2000.");
 
             return GetBannersInternal<BannerInfo>(null, bannerIds, PhraseInfoType.No, filter);
         }
 
         public List<BannerInfoWithPhrases<BannerPhraseInfo>> GetBannersWithPhrases(int[] bannerIds, BannersFilterInfo filter = null)
         {
-            if (bannerIds == null || bannerIds.Length == 0)
-                throw new ArgumentNullException("bannerIds");
-
-            if (bannerIds.Length > 2000)
-                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
+            Contract.Requires<ArgumentException>(bannerIds != null && bannerIds.Any(), "bannerIds");
+            Contract.Requires<ArgumentOutOfRangeException>(bannerIds.Length <= 2000, "Maximum allowed number of identifiers per call is 2000.");
 
             return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfo>>(null, bannerIds, PhraseInfoType.Yes, filter);
         }
 
         public List<BannerInfoWithPhrases<BannerPhraseInfoWithStats>> GetBannersWithPhrasesAndStats(int[] bannerIds, BannersFilterInfo filter = null)
         {
-            if (bannerIds == null || bannerIds.Length == 0)
-                throw new ArgumentNullException("bannerIds");
-
-            if (bannerIds.Length > 2000)
-                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 2000.");
+            Contract.Requires<ArgumentException>(bannerIds != null && bannerIds.Any(), "bannerIds");
+            Contract.Requires<ArgumentOutOfRangeException>(bannerIds.Length <= 2000, "Maximum allowed number of identifiers per call is 2000.");
 
             return GetBannersInternal<BannerInfoWithPhrases<BannerPhraseInfoWithStats>>(null, bannerIds, PhraseInfoType.WithPrices, filter);
         }
@@ -200,16 +183,14 @@ namespace Yandex.Direct
 
         public List<BannerPhraseInfo> GetBannerPhrases(BannerInfo banner, bool considerTimeTarget = false)
         {
-            if (banner == null)
-                throw new ArgumentNullException("banner");
+            Contract.Requires<ArgumentNullException>(banner != null, "banner");
 
             return GetBannerPhrases(banner.BannerId, considerTimeTarget);
         }
 
         public List<BannerPhraseInfoWithStats> GetBannerPhrasesWithStats(BannerInfo banner, bool considerTimeTarget = false)
         {
-            if (banner == null)
-                throw new ArgumentNullException("banner");
+            Contract.Requires<ArgumentNullException>(banner != null, "banner");
 
             return GetBannerPhrasesWithStats(banner.BannerId, considerTimeTarget);
         }
@@ -226,11 +207,8 @@ namespace Yandex.Direct
 
         public List<BannerPhraseInfo> GetBannerPhrases(int[] bannerIds, bool considerTimeTarget = false)
         {
-            if (bannerIds == null || bannerIds.Length == 0)
-                throw new ArgumentNullException("bannerIds");
-
-            if (bannerIds.Length > 1000)
-                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 1000.");
+            Contract.Requires<ArgumentException>(bannerIds != null && bannerIds.Any(), "bannerIds");
+            Contract.Requires<ArgumentOutOfRangeException>(bannerIds.Length <= 1000, "Maximum allowed number of identifiers per call is 1000.");
 
             var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.No, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
@@ -239,11 +217,8 @@ namespace Yandex.Direct
 
         public List<BannerPhraseInfoWithStats> GetBannerPhrasesWithStats(int[] bannerIds, bool considerTimeTarget = false)
         {
-            if (bannerIds == null || bannerIds.Length == 0)
-                throw new ArgumentNullException("bannerIds");
-
-            if (bannerIds.Length > 1000)
-                throw new ArgumentOutOfRangeException("bannerIds", "Maximum allowed number of identifiers per call is 1000.");
+            Contract.Requires<ArgumentException>(bannerIds != null && bannerIds.Any(), "bannerIds");
+            Contract.Requires<ArgumentOutOfRangeException>(bannerIds.Length <= 1000, "Maximum allowed number of identifiers per call is 1000.");
 
             var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.Yes, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
@@ -252,16 +227,14 @@ namespace Yandex.Direct
 
         public int CreateOrUpdateBanner(EditableBannerInfo banner)
         {
-            if (banner == null)
-                throw new ArgumentNullException("banner");
+            Contract.Requires<ArgumentNullException>(banner != null, "banner");
 
             return CreateOrUpdateBanners(new[] { banner }).FirstOrDefault();
         }
 
         public List<int> CreateOrUpdateBanners(IEnumerable<EditableBannerInfo> banners)
         {
-            if (banners == null)
-                throw new ArgumentNullException("banners");
+            Contract.Requires<ArgumentNullException>(banners != null, "banner");
 
             var bannersArray = banners.ToArray();
 

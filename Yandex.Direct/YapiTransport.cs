@@ -9,7 +9,7 @@ using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
 {
-    internal sealed class YapiTransport
+    public sealed class YapiTransport
     {
         public YapiSettings Setting { get; private set; }
         private readonly YapiSerializer _serializer;

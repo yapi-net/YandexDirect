@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Yandex.Direct
 {
-    internal class YapiRequestBuilder
+    public class YapiRequestBuilder
     {
         readonly Dictionary<string, string> _dictionary = new Dictionary<string, string>();
 
