@@ -3,23 +3,39 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Net;
+using Yandex.Direct.Authentication;
+using Yandex.Direct.Configuration;
+using Yandex.Direct.Connectivity;
 using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
 {
     public partial class YapiService
     {
-        #region Constructors and Properties
-
-        public YapiSettings Settings { get; private set; }
-        private YapiTransport YapiTransport { get; set; }
+        protected IYandexApiClient YandexApiClient { get; set; }
 
         public YapiService(YapiSettings settings)
         {
             Contract.Requires(settings != null);
-            
-            Settings = settings;
-            YapiTransport = new YapiTransport(settings);
+
+            IYandexAuthProvider authProvider;
+
+            switch (settings.AuthType)
+            {
+                case YapiAuthType.Token:
+                    authProvider = new TokenAuthProvider();
+                    break;
+
+                case YapiAuthType.Certificate:
+                    authProvider = new CertificateFileAuthProvider();
+                    break;
+
+                default:
+                    authProvider = null;
+                    break;
+            }
+
+            YandexApiClient = new JsonYandexApiClient(settings, authProvider);
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, errors) => true;
         }
@@ -40,13 +56,11 @@ namespace Yandex.Direct
         {
         }
 
-        #endregion
-
         #region PingApi
 
         public int PingApi()
         {
-            return YapiTransport.Request<int>(ApiCommand.PingAPI);
+            return YandexApiClient.Invoke<int>(ApiCommand.PingAPI.ToString());
         }
 
         public void TestApiConnection()
@@ -61,13 +75,13 @@ namespace Yandex.Direct
 
         public List<ShortClientInfo> GetClientLogins()
         {
-            return YapiTransport.Request<List<ShortClientInfo>>(ApiCommand.GetClientsList);
+            return YandexApiClient.Invoke<List<ShortClientInfo>>(ApiCommand.GetClientsList.ToString());
         }
 
         public ClientUnitInfo[] GetClientsUnits(params string[] logins)
         {
             Contract.Requires<ArgumentException>(logins != null && logins.Any(), "logins");
-            return YapiTransport.Request<ClientUnitInfo[]>(ApiCommand.GetClientsUnits, logins);
+            return YandexApiClient.Invoke<ClientUnitInfo[]>(ApiCommand.GetClientsUnits.ToString(), logins);
         }
 
         #endregion
@@ -87,7 +101,7 @@ namespace Yandex.Direct
         public List<ShortCampaignInfo> GetClientCampaigns(params string[] logins)
         {
             Contract.Requires<ArgumentException>(logins != null && logins.Any(), "logins");
-            return YapiTransport.Request<List<ShortCampaignInfo>>(ApiCommand.GetCampaignsList, logins);
+            return YandexApiClient.Invoke<List<ShortCampaignInfo>>(ApiCommand.GetCampaignsList.ToString(), logins);
         }
 
         #endregion
@@ -102,7 +116,7 @@ namespace Yandex.Direct
         public void TransferMoney(TransferInfo[] from, TransferInfo[] to)
         {
             var request = new { FromCampaigns = from, ToCampaigns = to };
-            YapiTransport.Request<int>(ApiCommand.TransferMoney, request, true);
+            YandexApiClient.Invoke<int>(ApiCommand.TransferMoney.ToString(), request, true);
         }
 
         #endregion
@@ -182,7 +196,7 @@ namespace Yandex.Direct
         {
             var request = new { CampaignIDS = campaingIds, BannerIDS = bannerIds, GetPhrases = phraseDetails, Filter = filter };
 
-            return YapiTransport.Request<List<T>>(ApiCommand.GetBanners, request);
+            return YandexApiClient.Invoke<List<T>>(ApiCommand.GetBanners.ToString(), request);
         }
 
         public List<BannerPhraseInfo> GetBannerPhrases(BannerInfo banner, bool considerTimeTarget = false)
@@ -216,7 +230,7 @@ namespace Yandex.Direct
 
             var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.No, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
-            return YapiTransport.Request<List<BannerPhraseInfo>>(ApiCommand.GetBannerPhrasesFilter, request);
+            return YandexApiClient.Invoke<List<BannerPhraseInfo>>(ApiCommand.GetBannerPhrasesFilter.ToString(), request);
         }
 
         public List<BannerPhraseInfoWithStats> GetBannerPhrasesWithStats(int[] bannerIds, bool considerTimeTarget = false)
@@ -226,7 +240,7 @@ namespace Yandex.Direct
 
             var request = new { BannerIDS = bannerIds, RequestPrices = YesNo.Yes, ConsiderTimeTarget = (YesNo)considerTimeTarget };
 
-            return YapiTransport.Request<List<BannerPhraseInfoWithStats>>(ApiCommand.GetBannerPhrasesFilter, request);
+            return YandexApiClient.Invoke<List<BannerPhraseInfoWithStats>>(ApiCommand.GetBannerPhrasesFilter.ToString(), request);
         }
 
         public int CreateOrUpdateBanner(EditableBannerInfo banner)
@@ -245,7 +259,7 @@ namespace Yandex.Direct
             if (bannersArray.Contains(null))
                 throw new ArgumentNullException("banners", "One of the items is null.");
 
-            return YapiTransport.Request<List<int>>(ApiCommand.CreateOrUpdateBanners, bannersArray);
+            return YandexApiClient.Invoke<List<int>>(ApiCommand.CreateOrUpdateBanners.ToString(), bannersArray);
         }
 
         #endregion
@@ -259,7 +273,7 @@ namespace Yandex.Direct
 
             var request = new { CampaignID = campaignId, BannerIDS = bannerIds };
 
-            return YapiTransport.Request<int>(ApiCommand.ArchiveBanners, request) == 1;
+            return YandexApiClient.Invoke<int>(ApiCommand.ArchiveBanners.ToString(), request) == 1;
         }
 
         public bool DeleteBanners(int campaignId, int[] bannerIds)
@@ -269,7 +283,7 @@ namespace Yandex.Direct
 
             var request = new { CampaignID = campaignId, BannerIDS = bannerIds };
 
-            return YapiTransport.Request<int>(ApiCommand.DeleteBanners, request) == 1;
+            return YandexApiClient.Invoke<int>(ApiCommand.DeleteBanners.ToString(), request) == 1;
         }
 
         public bool ModerateBanners(int campaignId, int[] bannerIds)
@@ -279,7 +293,7 @@ namespace Yandex.Direct
 
             var request = new { CampaignID = campaignId, BannerIDS = bannerIds };
 
-            return YapiTransport.Request<int>(ApiCommand.ModerateBanners, request) == 1;
+            return YandexApiClient.Invoke<int>(ApiCommand.ModerateBanners.ToString(), request) == 1;
         }
 
         public bool ResumeBanners(int campaignId, int[] bannerIds)
@@ -289,7 +303,7 @@ namespace Yandex.Direct
 
             var request = new { CampaignID = campaignId, BannerIDS = bannerIds };
 
-            return YapiTransport.Request<int>(ApiCommand.ResumeBanners, request) == 1;
+            return YandexApiClient.Invoke<int>(ApiCommand.ResumeBanners.ToString(), request) == 1;
         }
 
         public bool StopBanners(int campaignId, int[] bannerIds)
@@ -299,7 +313,7 @@ namespace Yandex.Direct
 
             var request = new { CampaignID = campaignId, BannerIDS = bannerIds };
 
-            return YapiTransport.Request<int>(ApiCommand.StopBanners, request) == 1;
+            return YandexApiClient.Invoke<int>(ApiCommand.StopBanners.ToString(), request) == 1;
         }
 
         public bool UnArchiveBanners(int campaignId, int[] bannerIds)
@@ -309,7 +323,7 @@ namespace Yandex.Direct
 
             var request = new { CampaignID = campaignId, BannerIDS = bannerIds };
 
-            return YapiTransport.Request<int>(ApiCommand.UnArchiveBanners, request) == 1;
+            return YandexApiClient.Invoke<int>(ApiCommand.UnArchiveBanners.ToString(), request) == 1;
         }
 
         #endregion
@@ -320,26 +334,26 @@ namespace Yandex.Direct
         {
             Contract.Requires<ArgumentNullException>(reportInfo != null, "reportInfo");
             Contract.Requires<YapiException>(reportInfo.Limit.HasValue ^ reportInfo.Offset.HasValue, "Only one of \"Limit\" and \"Offset\" should be set");
-            
-            return YapiTransport.Request<int>(ApiCommand.CreateNewReport, reportInfo);
+
+            return YandexApiClient.Invoke<int>(ApiCommand.CreateNewReport.ToString(), reportInfo);
         }
 
         public List<ReportInfo> ListReports()
         {
-            return YapiTransport.Request<List<ReportInfo>>(ApiCommand.GetReportList);
+            return YandexApiClient.Invoke<List<ReportInfo>>(ApiCommand.GetReportList.ToString());
         }
 
         public List<GoalInfo> GetStatGoals(int campaignId)
         {
             Contract.Requires<ArgumentOutOfRangeException>(campaignId > 0, "campaignId");
 
-            return YapiTransport.Request<List<GoalInfo>>(ApiCommand.GetStatGoals, new { CampaignID = campaignId });
+            return YandexApiClient.Invoke<List<GoalInfo>>(ApiCommand.GetStatGoals.ToString(), new { CampaignID = campaignId });
         }
 
         public void DeleteReport(int reportId)
         {
             Contract.Requires<ArgumentOutOfRangeException>(reportId > 0, "reportId");
-            var result = YapiTransport.Request<int>(ApiCommand.DeleteReport, reportId);
+            var result = YandexApiClient.Invoke<int>(ApiCommand.DeleteReport.ToString(), reportId);
             if (result != 1)
                 throw new YapiServerException(string.Format("Плохой ответ. Должен вернуть: 1. Вернул: {0}", result));
         }
@@ -354,23 +368,23 @@ namespace Yandex.Direct
             
             var request = new { Categories = categoryIds, GeoID = geoIds, Phrases = phrases };
 
-            return YapiTransport.Request<int>(ApiCommand.CreateNewForecast, request);
+            return YandexApiClient.Invoke<int>(ApiCommand.CreateNewForecast.ToString(), request);
         }
 
         public ForecastInfo GetForecast(int forecastId)
         {
             Contract.Requires<ArgumentOutOfRangeException>(forecastId > 0, "forecastId");
-            return YapiTransport.Request<ForecastInfo>(ApiCommand.GetForecast, forecastId);
+            return YandexApiClient.Invoke<ForecastInfo>(ApiCommand.GetForecast.ToString(), forecastId);
         }
 
         public List<ForecastStatus> ListForecasts()
         {
-            return YapiTransport.Request<List<ForecastStatus>>(ApiCommand.GetForecastList);
+            return YandexApiClient.Invoke<List<ForecastStatus>>(ApiCommand.GetForecastList.ToString());
         }
 
         public void DeleteForecast(int forecastReportId)
         {
-            var result = YapiTransport.Request<int>(ApiCommand.DeleteForecastReport, forecastReportId);
+            var result = YandexApiClient.Invoke<int>(ApiCommand.DeleteForecastReport.ToString(), forecastReportId);
             if (result != 1)
                 throw new YapiServerException(string.Format("Плохой ответ. Должен вернуть: 1. Вернул: {0}", result));
         }

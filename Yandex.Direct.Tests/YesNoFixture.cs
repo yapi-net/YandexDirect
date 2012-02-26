@@ -59,19 +59,23 @@ namespace Yandex.Direct.Tests
         [TestMethod]
         public void YesNoSerializationTest()
         {
-            Assert.AreEqual("\"Yes\"", JsonConvert.SerializeObject(YesNo.Yes));
+            JsonYandexApiSerializer serializer = new JsonYandexApiSerializer();
 
-            Assert.AreEqual(YesNo.Yes, JsonConvert.DeserializeObject<YesNo>("\"Yes\""));
-            Assert.AreEqual(YesNo.Yes, JsonConvert.DeserializeObject<YesNo?>("\"Yes\""));
-            Assert.AreEqual(null, JsonConvert.DeserializeObject<YesNo?>(string.Empty));
+            Assert.AreEqual("\"Yes\"", serializer.Serialize(YesNo.Yes));
+
+            Assert.AreEqual(YesNo.Yes, serializer.Deserialize<YesNo>("\"Yes\""));
+            Assert.AreEqual(YesNo.Yes, serializer.Deserialize<YesNo?>("\"Yes\""));
+            Assert.AreEqual(null, serializer.Deserialize<YesNo?>(string.Empty));
         }
 
         [TestMethod]
         public void YesNoArrayConverterTest()
         {
-            Assert.AreEqual("{\"Value\":[\"Yes\"]}", JsonConvert.SerializeObject(new YesNoObjectStub { Value = true }));
-            Assert.AreEqual("{\"Value\":[\"No\"]}", JsonConvert.SerializeObject(new YesNoObjectStub { Value = false }));
-            Assert.AreEqual("{\"Value\":null}", JsonConvert.SerializeObject(new YesNoObjectStub { Value = null }));
+            JsonYandexApiSerializer serializer = new JsonYandexApiSerializer();
+
+            Assert.AreEqual("{\"Value\":[\"Yes\"]}", serializer.Serialize(new YesNoObjectStub { Value = true }));
+            Assert.AreEqual("{\"Value\":[\"No\"]}", serializer.Serialize(new YesNoObjectStub { Value = false }));
+            Assert.AreEqual("{}", serializer.Serialize(new YesNoObjectStub { Value = null }));
         }
     }
 }

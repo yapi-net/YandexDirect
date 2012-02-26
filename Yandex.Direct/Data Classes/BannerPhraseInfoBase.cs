@@ -17,7 +17,7 @@ namespace Yandex.Direct
 
         public string Phrase { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsRubric { get; set; }
 
         public int? RubricId
@@ -28,7 +28,7 @@ namespace Yandex.Direct
             }
         }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool AutoBroker { get; set; }
 
         public AutoBudgetPriority? AutoBudgetPriority { get; set; }

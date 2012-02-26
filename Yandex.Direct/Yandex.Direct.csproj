@@ -103,11 +103,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Authentication\CertificateFileAuthProvider.cs" />
+    <Compile Include="Authentication\IYandexAuthProvider.cs" />
+    <Compile Include="Authentication\TokenAuthProvider.cs" />
+    <Compile Include="Authentication\YandexAuthProviderBase.cs" />
+    <Compile Include="Connectivity\IYandexApiClient.cs" />
+    <Compile Include="Connectivity\JsonResponseObject.cs" />
     <Compile Include="Data Classes\BannerInfoExtensions.cs" />
     <Compile Include="Exceptions\YapiCodeServerException.cs" />
     <Compile Include="Exceptions\YapiConfigurationException.cs" />
-    <Compile Include="YapiAuthType.cs" />
-    <Compile Include="YapiRequestBuilder.cs" />
+    <Compile Include="Configuration\YapiAuthType.cs" />
     <Compile Include="Data Classes\BannerInfoBase.cs" />
     <Compile Include="Data Classes\BannerInfoWithPhrases.cs" />
     <Compile Include="Data Classes\BannerPhraseInfoBase.cs" />
@@ -125,7 +130,7 @@
     <Compile Include="Data Classes\PhraseUserParams.cs" />
     <Compile Include="Serialization\YesNo.cs" />
     <Compile Include="Serialization\YesNoArrayConverter.cs" />
-    <Compile Include="Serialization\YesNoBooleanConverter.cs" />
+    <Compile Include="Serialization\YesNoConverter.cs" />
     <Compile Include="Data Classes\Enums\ActivatingStatus.cs" />
     <Compile Include="Data Classes\Enums\DateGroupingType.cs" />
     <Compile Include="Data Classes\Enums\ModerationStatus.cs" />
@@ -146,10 +151,11 @@
     <Compile Include="Data Classes\Enums\ReportStatus.cs" />
     <Compile Include="Exceptions\YapiException.cs" />
     <Compile Include="Exceptions\YapiServerException.cs" />
-    <Compile Include="Serialization\YapiSerializer.cs" />
+    <Compile Include="Serialization\JsonYandexApiSerializer.cs" />
+    <Compile Include="Connectivity\YandexApiErrorCode.cs" />
     <Compile Include="YapiService.ApiCommands.cs" />
     <Compile Include="YapiLanguage.cs" />
-    <Compile Include="YapiSettings.cs" />
+    <Compile Include="Configuration\YapiSettings.cs" />
     <Compile Include="Configuration\YandexDirectSection.cs" />
     <Compile Include="Data Classes\BannerInfo.cs" />
     <Compile Include="Data Classes\BannerPhraseInfo.cs" />
@@ -158,12 +164,10 @@
     <Compile Include="Data Classes\ShortClientInfo.cs" />
     <Compile Include="Data Classes\SiteLinkInfo.cs" />
     <Compile Include="Data Classes\TransferInfo.cs" />
-    <Compile Include="Data Classes\YandexErrorInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YandexSignature.cs" />
-    <Compile Include="YapiResponse.cs" />
+    <Compile Include="Authentication\FinanceTokenGenerator.cs" />
     <Compile Include="YapiService.cs" />
-    <Compile Include="YapiTransport.cs" />
+    <Compile Include="Connectivity\JsonYandexApiClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -171,9 +175,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Transport\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

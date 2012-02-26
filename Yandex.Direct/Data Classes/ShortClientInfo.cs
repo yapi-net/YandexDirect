@@ -19,7 +19,7 @@ namespace Yandex.Direct
         public decimal Discount { get; set; }
 
         [JsonProperty("StatusArch")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool StatusArchive { get; set; }
     }
 }

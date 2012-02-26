@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace Yandex.Direct.Serialization
 {
-    public class YesNoBooleanConverter : JsonConverter
+    public class YesNoConverter : JsonConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
