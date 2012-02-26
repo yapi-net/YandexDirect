@@ -5,7 +5,6 @@ namespace Yandex.Direct
     /// <summary>
     /// Состояние прогноза
     /// </summary>
-    [JsonObject]
     public class ForecastStatus
     {
         [JsonProperty("ForecastID")]

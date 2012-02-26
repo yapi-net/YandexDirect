@@ -127,14 +127,12 @@
     <Compile Include="Serialization\YesNoArrayConverter.cs" />
     <Compile Include="Serialization\YesNoBooleanConverter.cs" />
     <Compile Include="Data Classes\Enums\ActivatingStatus.cs" />
-    <Compile Include="Data Classes\CampaignBidsInfo.cs" />
     <Compile Include="Data Classes\Enums\DateGroupingType.cs" />
     <Compile Include="Data Classes\Enums\ModerationStatus.cs" />
     <Compile Include="Data Classes\Forecasts\ForecastStatus.cs" />
     <Compile Include="Data Classes\Forecasts\ForecastBannerPhraseInfo.cs" />
     <Compile Include="Data Classes\Forecasts\ForecastCommonInfo.cs" />
     <Compile Include="Data Classes\Forecasts\ForecastInfo.cs" />
-    <Compile Include="Data Classes\Forecasts\NewForecastInfo.cs" />
     <Compile Include="Data Classes\Reports\NewReportFilterInfo.cs" />
     <Compile Include="Data Classes\Reports\NewReportInfo.cs" />
     <Compile Include="Data Classes\Enums\ReportColumn.cs" />
@@ -146,7 +144,6 @@
     <Compile Include="Data Classes\Reports\GoalInfo.cs" />
     <Compile Include="Data Classes\Enums\ReportType.cs" />
     <Compile Include="Data Classes\Enums\ReportStatus.cs" />
-    <Compile Include="Data Classes\Reports\StatGoalRequestInfo.cs" />
     <Compile Include="Exceptions\YapiException.cs" />
     <Compile Include="Exceptions\YapiServerException.cs" />
     <Compile Include="Serialization\YapiSerializer.cs" />
@@ -169,12 +166,14 @@
     <Compile Include="YapiTransport.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config">
+    <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Transport\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -2,7 +2,6 @@
 
 namespace Yandex.Direct
 {
-    [JsonObject]
     public class YapiResponse<T>
     {
         [JsonProperty("data")]

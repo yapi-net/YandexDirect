@@ -3,7 +3,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Yandex.Direct.Serialization
 {
-    internal sealed class YapiSerializer
+    public class YapiSerializer
     {
         public JsonSerializerSettings JsonSettings { get; private set; }
 

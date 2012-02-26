@@ -5,7 +5,7 @@ using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
 {
-    [JsonObject, DebuggerDisplay("{Login}")]
+    [DebuggerDisplay("{Login}")]
     public class ShortClientInfo
     {
         [JsonProperty("Login")]
