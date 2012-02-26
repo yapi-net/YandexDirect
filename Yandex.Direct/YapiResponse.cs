@@ -6,6 +6,6 @@ namespace Yandex.Direct
     public class YapiResponse<T>
     {
         [JsonProperty("data")]
-        public T Data;
+        public T Data { get; set; }
     }
 }

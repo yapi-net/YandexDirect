@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
 {
@@ -8,7 +9,8 @@ namespace Yandex.Direct
         public string Phrase { get; set; }
 
         /// <summary>В качестве фразы используется рубрика Яндекс.Каталога — Yes/No. При значении Yes в параметре Phrase указан идентификатор рубрики</summary>
-        public BooleanType IsRubric { get; set; }
+        [JsonConverter(typeof(YesNoBooleanConverter))]
+        public bool IsRubric { get; set; }
 
         /// <summary>Цена за клик на сайтах рекламной сети Яндекса</summary>
         public decimal ContextPrice { get; set; }
@@ -33,15 +35,18 @@ namespace Yandex.Direct
 
         /// <summary>Фраза имеет низкий CTR и может быть вскоре отключена</summary>
         [JsonProperty("LowCTRWarning")]
-        public BooleanType IsLowCtrWarning { get; set; }
+        [JsonConverter(typeof(YesNoBooleanConverter))]
+        public bool IsLowCtrWarning { get; set; }
 
         /// <summary>Фраза отключена на поиске за низкий CTR</summary>
         [JsonProperty("LowCTR")]
-        public BooleanType IsLowCtr { get; set; }
+        [JsonConverter(typeof(YesNoBooleanConverter))]
+        public bool IsLowCtr { get; set; }
 
         /// <summary>Фраза отключена на сайтах рекламной сети Яндекса за низкий CTR</summary>
         [JsonProperty("ContextLowCTR")]
-        public BooleanType IsContextLowCtr { get; set; }
+        [JsonConverter(typeof(YesNoBooleanConverter))]
+        public bool IsContextLowCtr { get; set; }
 
         /// <summary>Прогнозируемое количество кликов при показе на первом месте</summary>
         public int FirstPlaceClicks { get; set; }
