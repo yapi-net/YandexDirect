@@ -7,9 +7,9 @@ namespace Yandex.Direct.Tests
     [TestClass]
     public class JsonResponseObjectFixture
     {
-        const YandexApiErrorCode ERROR_CODE = YandexApiErrorCode.BannerLimitExceeded;
-        const string ERROR_MESSAGE = "ERROR_MESSAGE";
-        const string ERROR_DESCRIPTION = "ERROR_DESCRIPTION";
+        const YandexApiErrorCode ErrorCode = YandexApiErrorCode.BannerLimitExceeded;
+        const string ErrorMessage = "ERROR_MESSAGE";
+        const string ErrorDescription = "ERROR_DESCRIPTION";
 
         static T Deserialize<T>(string jsonString)
         {
@@ -24,13 +24,13 @@ namespace Yandex.Direct.Tests
         [TestMethod]
         public void SimpleDeserializationWorks()
         {
-            var json = CreateErrorInfoJson((int)ERROR_CODE, ERROR_MESSAGE, ERROR_DESCRIPTION);
+            var json = CreateErrorInfoJson((int)ErrorCode, ErrorMessage, ErrorDescription);
             
             var result = Deserialize<JsonResponseObject<object>>(json);
 
-            result.ErrorCode.ShouldBe(ERROR_CODE);
-            result.ErrorMessage.ShouldBe(ERROR_MESSAGE);
-            result.ErrorDescription.ShouldBe(ERROR_DESCRIPTION);
+            result.ErrorCode.ShouldBe(ErrorCode);
+            result.ErrorMessage.ShouldBe(ErrorMessage);
+            result.ErrorDescription.ShouldBe(ErrorDescription);
 
             result.Object.ShouldBe(null);
         }
