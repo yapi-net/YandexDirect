@@ -14,45 +14,22 @@ namespace Yandex.Direct
     {
         protected IYandexApiClient YandexApiClient { get; set; }
 
-        public YapiService(YapiSettings settings)
+        public YapiService(YapiSettings settings, IYandexDirectAuthProvider authProvider)
         {
             Contract.Requires(settings != null);
-
-            IYandexAuthProvider authProvider;
-
-            switch (settings.AuthType)
-            {
-                case YapiAuthType.Token:
-                    authProvider = new TokenAuthProvider();
-                    break;
-
-                case YapiAuthType.Certificate:
-                    authProvider = new CertificateFileAuthProvider();
-                    break;
-
-                default:
-                    authProvider = null;
-                    break;
-            }
 
             YandexApiClient = new JsonYandexApiClient(settings, authProvider);
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, errors) => true;
         }
 
-        /// <summary>
-        /// Создать клиента для Яндекс-Директа, используя файл конфигурации (секция yandex.direct)
-        /// </summary>
-        public YapiService()
-            : this(YapiSettings.FromConfiguration())
+        public YapiService(IYandexDirectAuthProvider authProvider)
+            : this(YapiSettings.FromConfiguration(), authProvider)
         {
         }
 
-        /// <summary>
-        /// Создать клиента для Яндекс-Директа, указав путь к файлу сертификата и пароль
-        /// </summary>
-        public YapiService(string certificatePath, string certificatePassword)
-            : this(new YapiSettings(certificatePath, certificatePassword))
+        public YapiService()
+            : this(new FileCertificateAuthProvider())
         {
         }
 

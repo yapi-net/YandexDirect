@@ -103,10 +103,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Authentication\CertificateFileAuthProvider.cs" />
-    <Compile Include="Authentication\IYandexAuthProvider.cs" />
+    <Compile Include="Authentication\FileCertificateAuthProvider.cs" />
+    <Compile Include="Authentication\IYandexDirectAuthProvider.cs" />
+    <Compile Include="Authentication\StoredCertificateAuthProvider.cs" />
     <Compile Include="Authentication\TokenAuthProvider.cs" />
-    <Compile Include="Authentication\YandexAuthProviderBase.cs" />
+    <Compile Include="Authentication\YandexDirectAuthProviderBase.cs" />
     <Compile Include="Connectivity\IYandexApiClient.cs" />
     <Compile Include="Connectivity\JsonResponseObject.cs" />
     <Compile Include="Data Classes\BannerInfoExtensions.cs" />
@@ -154,7 +155,7 @@
     <Compile Include="Serialization\JsonYandexApiSerializer.cs" />
     <Compile Include="Connectivity\YandexApiErrorCode.cs" />
     <Compile Include="YapiService.ApiCommands.cs" />
-    <Compile Include="YapiLanguage.cs" />
+    <Compile Include="Configuration\YapiLanguage.cs" />
     <Compile Include="Configuration\YapiSettings.cs" />
     <Compile Include="Configuration\YandexDirectSection.cs" />
     <Compile Include="Data Classes\BannerInfo.cs" />

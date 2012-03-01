@@ -8,7 +8,7 @@ using Yandex.Direct.Connectivity;
 
 namespace Yandex.Direct.Authentication
 {
-    public class CertificateFileAuthProvider : YandexAuthProviderBase
+    public class FileCertificateAuthProvider : YandexDirectAuthProviderBase
     {
         private volatile X509Certificate2 _certificate;
         private readonly object _syncLock = new object();

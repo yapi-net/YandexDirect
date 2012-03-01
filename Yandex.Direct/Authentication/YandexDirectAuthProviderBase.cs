@@ -7,7 +7,7 @@ using Yandex.Direct.Connectivity;
 
 namespace Yandex.Direct.Authentication
 {
-    public abstract class YandexAuthProviderBase : IYandexAuthProvider
+    public abstract class YandexDirectAuthProviderBase : IYandexDirectAuthProvider
     {
         public virtual void OnHttpRequest(IYandexApiClient client, HttpWebRequest request)
         {

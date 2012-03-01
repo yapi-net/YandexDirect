@@ -6,7 +6,7 @@ using Yandex.Direct.Connectivity;
 
 namespace Yandex.Direct.Authentication
 {
-    public class TokenAuthProvider : YandexAuthProviderBase
+    public class TokenAuthProvider : YandexDirectAuthProviderBase
     {
         public override void OnRequestMessage(IYandexApiClient client, string method, IDictionary<string, object> messageParams, bool financeTokenRequired)
         {

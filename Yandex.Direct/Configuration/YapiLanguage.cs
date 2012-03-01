@@ -1,6 +1,6 @@
 using System.Runtime.Serialization;
 
-namespace Yandex.Direct
+namespace Yandex.Direct.Configuration
 {
     /// <summary>
     /// Yandex API reply language

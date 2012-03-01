@@ -15,9 +15,9 @@ namespace Yandex.Direct.Connectivity
         public YapiSettings Settings { get; private set; }
 
         private readonly JsonYandexApiSerializer _serializer;
-        private readonly IYandexAuthProvider _authProvider;
+        private readonly IYandexDirectAuthProvider _authProvider;
 
-        public JsonYandexApiClient(YapiSettings settings, IYandexAuthProvider authProvider)
+        public JsonYandexApiClient(YapiSettings settings, IYandexDirectAuthProvider authProvider)
         {
             if (settings == null)
                 throw new ArgumentNullException("settings");
