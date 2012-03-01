@@ -1,4 +1,4 @@
-namespace Yandex.Direct
+namespace Yandex.Direct.Configuration
 {
     public class YapiSettings
     {

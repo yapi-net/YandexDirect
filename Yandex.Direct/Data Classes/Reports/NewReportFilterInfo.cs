@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 
 namespace Yandex.Direct
 {
-    [JsonObject]
     public class NewReportFilterInfo
     {
         public PageFilterType? PageType { get; set; }

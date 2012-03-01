@@ -23,15 +23,15 @@ namespace Yandex.Direct
         public decimal MinPrice { get; set; }
 
         [JsonProperty("LowCTRWarning")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsLowCtrWarning { get; set; }
 
         [JsonProperty("LowCTR")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsLowCtr { get; set; }
 
         [JsonProperty("ContextLowCTR")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsContextLowCtr { get; set; }
 
         public List<PhraseCoverageInfo> Coverage { get; set; }

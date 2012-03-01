@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 
 namespace Yandex.Direct
 {
-    [JsonObject]
     public class NewReportInfo
     {
         [JsonProperty("CampaignID")]

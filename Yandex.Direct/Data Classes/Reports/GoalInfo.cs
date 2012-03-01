@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Yandex.Direct
 {
-    [JsonObject, DebuggerDisplay("{Id} - {Name}")]
+    [DebuggerDisplay("{Id} - {Name}")]
     public class GoalInfo
     {
         /// <summary>Id of goal in Yandex.Direct</summary>

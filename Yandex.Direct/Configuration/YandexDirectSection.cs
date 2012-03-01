@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace Yandex.Direct.Configuration
 {
-    internal class YandexDirectSection : ConfigurationSection
+    public class YandexDirectSection : ConfigurationSection
     {
         #region Default Instance
 

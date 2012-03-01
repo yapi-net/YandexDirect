@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Yandex.Direct.Serialization
 {
-    [JsonConverter(typeof(YesNoBooleanConverter))]
+    [JsonConverter(typeof(YesNoConverter))]
     public struct YesNo
     {
         public static YesNo Yes = new YesNo(true);

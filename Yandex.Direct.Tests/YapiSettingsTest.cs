@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using Yandex.Direct.Configuration;
+using Yandex.Direct.Connectivity;
 
 namespace Yandex.Direct.Tests
 {

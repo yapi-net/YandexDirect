@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace Yandex.Direct
 {
-    [JsonObject, DebuggerDisplay("{Id} - {Sum}")]
+    [DebuggerDisplay("{Id} - {Sum}")]
     public class TransferInfo
     {
         [JsonProperty("CampaignID")]
