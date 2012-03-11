@@ -54,7 +54,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContractTests.cs" />
-    <Compile Include="ErrorInfoDeserializationTests.cs" />
+    <Compile Include="JsonResponseObjectFixture.cs" />
+    <Compile Include="JsonSerializerFixture.cs" />
     <Compile Include="Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YapiSettingsTest.cs" />
@@ -67,7 +68,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

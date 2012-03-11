@@ -25,17 +25,17 @@ namespace Yandex.Direct
 
         public string Status { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool StatusShow { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool StatusArchive { get; set; }
 
         public ActivatingStatus StatusActivating { get; set; }
 
         public ModerationStatus StatusModerate { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsActive { get; set; }
 
         public string ManagerName { get; set; }

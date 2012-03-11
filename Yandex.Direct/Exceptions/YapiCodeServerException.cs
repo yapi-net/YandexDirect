@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
+using Yandex.Direct.Connectivity;
 
 namespace Yandex.Direct
 {
@@ -9,9 +10,9 @@ namespace Yandex.Direct
     public sealed class YapiCodeServerException : YapiServerException
     {
         const string ErrorCodeField = "ErrorCode";
-        public YapiService.YapiErrorCode ErrorCode { get; private set; }
+        public YandexApiErrorCode ErrorCode { get; private set; }
 
-        public YapiCodeServerException(YapiService.YapiErrorCode errorCode, string error)
+        public YapiCodeServerException(YandexApiErrorCode errorCode, string error)
             : base(string.Format("Yandex API error, code {0}. {1}", errorCode, error))
         {
             this.ErrorCode = errorCode;
@@ -32,7 +33,7 @@ namespace Yandex.Direct
         private YapiCodeServerException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            this.ErrorCode = (YapiService.YapiErrorCode)info.GetValue(ErrorCodeField, typeof(YapiService.YapiErrorCode));
+            this.ErrorCode = (YandexApiErrorCode)info.GetValue(ErrorCodeField, typeof(YandexApiErrorCode));
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)

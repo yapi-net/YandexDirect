@@ -5,7 +5,7 @@ using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
 {
-    [JsonObject, DebuggerDisplay("{Login}")]
+    [DebuggerDisplay("{Login}")]
     public class ShortClientInfo
     {
         [JsonProperty("Login")]
@@ -19,7 +19,7 @@ namespace Yandex.Direct
         public decimal Discount { get; set; }
 
         [JsonProperty("StatusArch")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool StatusArchive { get; set; }
     }
 }

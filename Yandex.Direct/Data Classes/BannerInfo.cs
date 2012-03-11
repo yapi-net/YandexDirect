@@ -11,17 +11,17 @@ namespace Yandex.Direct
 
         public ActivatingStatus StatusActivating { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool StatusArchive { get; set; }
 
         public ModerationStatus StatusBannerModerate { get; set; }
         public ModerationStatus StatusPhrasesModerate { get; set; }
         public ModerationStatus StatusPhoneModerate { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool StatusShow { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsActive { get; set; }
 
         public ModerationStatus? StatusSitelinksModerate { get; set; }
@@ -29,7 +29,7 @@ namespace Yandex.Direct
         //TODO: Convert to Enum Flags (Issue #4)
         public List<string> AdWarnings { get; set; }
 
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool FixedOnModeration { get; set; }
 
         public List<RejectReason> ModerateRejectionReasons { get; set; }

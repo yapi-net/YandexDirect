@@ -9,7 +9,7 @@ namespace Yandex.Direct
         public string Phrase { get; set; }
 
         /// <summary>В качестве фразы используется рубрика Яндекс.Каталога — Yes/No. При значении Yes в параметре Phrase указан идентификатор рубрики</summary>
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsRubric { get; set; }
 
         /// <summary>Цена за клик на сайтах рекламной сети Яндекса</summary>
@@ -35,17 +35,17 @@ namespace Yandex.Direct
 
         /// <summary>Фраза имеет низкий CTR и может быть вскоре отключена</summary>
         [JsonProperty("LowCTRWarning")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsLowCtrWarning { get; set; }
 
         /// <summary>Фраза отключена на поиске за низкий CTR</summary>
         [JsonProperty("LowCTR")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsLowCtr { get; set; }
 
         /// <summary>Фраза отключена на сайтах рекламной сети Яндекса за низкий CTR</summary>
         [JsonProperty("ContextLowCTR")]
-        [JsonConverter(typeof(YesNoBooleanConverter))]
+        [JsonConverter(typeof(YesNoConverter))]
         public bool IsContextLowCtr { get; set; }
 
         /// <summary>Прогнозируемое количество кликов при показе на первом месте</summary>
