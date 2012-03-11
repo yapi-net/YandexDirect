@@ -14,23 +14,35 @@ namespace Yandex.Direct
     {
         protected IYandexApiClient YandexApiClient { get; set; }
 
-        public YapiService(YapiSettings settings, IYandexDirectAuthProvider authProvider)
-        {
-            Contract.Requires(settings != null);
+        public YandexDirectConfiguration Configuration { get; private set; }
 
-            YandexApiClient = new JsonYandexApiClient(settings, authProvider);
+        public YapiService(YandexDirectConfiguration configuration)
+        {
+            if (configuration == null)
+                throw new ArgumentNullException("configuration");
+
+            Configuration = configuration;
+            YandexApiClient = new JsonYandexApiClient(configuration);
 
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, errors) => true;
         }
 
-        public YapiService(IYandexDirectAuthProvider authProvider)
-            : this(YapiSettings.FromConfiguration(), authProvider)
+        public YapiService()
+            : this(YandexDirectConfiguration.LoadFromConfigurationFile())
         {
         }
 
-        public YapiService()
-            : this(new FileCertificateAuthProvider())
+        public YapiService(IYandexApiAuthProvider authProvider)
+            : this(YandexDirectConfiguration.LoadFromConfigurationFile())
         {
+            Configuration.AuthProvider = authProvider;
+        }
+
+        public YapiService(IYandexApiAuthProvider authProvider, YandexApiLanguage language)
+            : this(YandexDirectConfiguration.LoadFromConfigurationFile())
+        {
+            Configuration.AuthProvider = authProvider;
+            Configuration.Language = language;
         }
 
         #region PingApi

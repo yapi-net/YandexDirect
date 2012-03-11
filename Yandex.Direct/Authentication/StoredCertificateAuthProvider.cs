@@ -15,6 +15,15 @@ namespace Yandex.Direct.Authentication
         private volatile X509Certificate2Collection _certificates;
         private readonly object _syncLock = new object();
 
+        public StoredCertificateAuthProvider()
+        {
+        }
+
+        public StoredCertificateAuthProvider(string login, string masterToken)
+            : base(login, masterToken)
+        {
+        }
+
         public override void OnHttpRequest(IYandexApiClient client, HttpWebRequest request)
         {
             if (_certificates == null)

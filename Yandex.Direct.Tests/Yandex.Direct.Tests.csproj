@@ -58,7 +58,7 @@
     <Compile Include="JsonSerializerFixture.cs" />
     <Compile Include="Should.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="YapiSettingsTest.cs" />
+    <Compile Include="YandexDirectConfigurationFixture.cs" />
     <Compile Include="YesNoFixture.cs" />
   </ItemGroup>
   <ItemGroup>

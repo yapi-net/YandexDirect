@@ -104,16 +104,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\FileCertificateAuthProvider.cs" />
-    <Compile Include="Authentication\IYandexDirectAuthProvider.cs" />
+    <Compile Include="Authentication\IAuthProviderSettings.cs" />
+    <Compile Include="Authentication\IYandexApiAuthProvider.cs" />
     <Compile Include="Authentication\StoredCertificateAuthProvider.cs" />
     <Compile Include="Authentication\TokenAuthProvider.cs" />
     <Compile Include="Authentication\YandexDirectAuthProviderBase.cs" />
+    <Compile Include="Configuration\AuthProviderConfigElement.cs" />
+    <Compile Include="Configuration\IYandexApiConfiguration.cs" />
+    <Compile Include="Configuration\YandexDirectConfiguration.cs" />
+    <Compile Include="Configuration\YandexDirectSection.cs" />
     <Compile Include="Connectivity\IYandexApiClient.cs" />
     <Compile Include="Connectivity\JsonResponseObject.cs" />
     <Compile Include="Data Classes\BannerInfoExtensions.cs" />
     <Compile Include="Exceptions\YapiCodeServerException.cs" />
     <Compile Include="Exceptions\YapiConfigurationException.cs" />
-    <Compile Include="Configuration\YapiAuthType.cs" />
     <Compile Include="Data Classes\BannerInfoBase.cs" />
     <Compile Include="Data Classes\BannerInfoWithPhrases.cs" />
     <Compile Include="Data Classes\BannerPhraseInfoBase.cs" />
@@ -155,9 +159,7 @@
     <Compile Include="Serialization\JsonYandexApiSerializer.cs" />
     <Compile Include="Connectivity\YandexApiErrorCode.cs" />
     <Compile Include="YapiService.ApiCommands.cs" />
-    <Compile Include="Configuration\YapiLanguage.cs" />
-    <Compile Include="Configuration\YapiSettings.cs" />
-    <Compile Include="Configuration\YandexDirectSection.cs" />
+    <Compile Include="Configuration\YandexApiLanguage.cs" />
     <Compile Include="Data Classes\BannerInfo.cs" />
     <Compile Include="Data Classes\BannerPhraseInfo.cs" />
     <Compile Include="Data Classes\ClientUnitInfo.cs" />

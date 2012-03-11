@@ -8,7 +8,7 @@ namespace Yandex.Direct.Connectivity
 {
     public interface IYandexApiClient
     {
-        YapiSettings Settings { get; }
+        IYandexApiConfiguration Configuration { get; }
 
         T Invoke<T>(string method, object param = null, bool financeTokenRequired = false);
     }
