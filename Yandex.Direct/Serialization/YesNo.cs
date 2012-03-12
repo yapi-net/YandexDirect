@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using Newtonsoft.Json;
 
 namespace Yandex.Direct.Serialization
@@ -19,7 +18,8 @@ namespace Yandex.Direct.Serialization
 
         public static bool TryParse(string s, out YesNo result)
         {
-            Contract.Requires<ArgumentException>(!string.IsNullOrWhiteSpace(s), "s");
+            if (string.IsNullOrEmpty("s"))
+                throw new ArgumentNullException("s");
 
             switch (s.ToLowerInvariant())
             {

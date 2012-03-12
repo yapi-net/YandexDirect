@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
@@ -60,7 +60,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeContractsEnableRuntimeChecking>True</CodeContractsEnableRuntimeChecking>
@@ -158,7 +158,8 @@
     <Compile Include="Exceptions\YapiServerException.cs" />
     <Compile Include="Serialization\JsonYandexApiSerializer.cs" />
     <Compile Include="Connectivity\YandexApiErrorCode.cs" />
-    <Compile Include="YapiService.ApiCommands.cs" />
+    <Compile Include="YapiService.AdsAndPhrases.cs" />
+    <Compile Include="YapiService.AdStatus.cs" />
     <Compile Include="Configuration\YandexApiLanguage.cs" />
     <Compile Include="Data Classes\BannerInfo.cs" />
     <Compile Include="Data Classes\BannerPhraseInfo.cs" />
@@ -169,8 +170,17 @@
     <Compile Include="Data Classes\TransferInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Authentication\FinanceTokenGenerator.cs" />
+    <Compile Include="YapiService.BudgetForecasting.cs" />
+    <Compile Include="YapiService.Campaigns.cs" />
+    <Compile Include="YapiService.CampaignStatistics.cs" />
+    <Compile Include="YapiService.CampaignStatus.cs" />
+    <Compile Include="YapiService.CatalogAndRegions.cs" />
+    <Compile Include="YapiService.Clients.cs" />
+    <Compile Include="YapiService.CostPerClick.cs" />
     <Compile Include="YapiService.cs" />
     <Compile Include="Connectivity\JsonYandexApiClient.cs" />
+    <Compile Include="YapiService.Finances.cs" />
+    <Compile Include="YapiService.Keywords.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
