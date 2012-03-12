@@ -3,19 +3,19 @@ using System.Runtime.Serialization;
 namespace Yandex.Direct.Configuration
 {
     /// <summary>
-    /// Yandex API reply language
+    /// Enumerates languages for responses.
     /// </summary>
-    public enum YapiLanguage
+    public enum YandexApiLanguage
     {
-        ///<summary>English</summary>
+        ///<summary>English language.</summary>
         [EnumMember(Value = "en")]
         English,
 
-        ///<summary>Russian</summary>
+        ///<summary>Russian language.</summary>
         [EnumMember(Value = "ru")]
         Russian,
 
-        ///<summary>Ukranian</summary>
+        ///<summary>Ukranian language.</summary>
         [EnumMember(Value = "ua")]
         Ukrainian,
     }
