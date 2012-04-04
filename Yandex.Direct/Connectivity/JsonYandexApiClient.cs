@@ -12,20 +12,17 @@ namespace Yandex.Direct.Connectivity
 {
     public class JsonYandexApiClient : IYandexApiClient
     {
-        public YapiSettings Settings { get; private set; }
+        public IYandexApiConfiguration Configuration { get; private set; }
 
         private readonly JsonYandexApiSerializer _serializer;
-        private readonly IYandexDirectAuthProvider _authProvider;
 
-        public JsonYandexApiClient(YapiSettings settings, IYandexDirectAuthProvider authProvider)
+        public JsonYandexApiClient(IYandexApiConfiguration configuration)
         {
-            if (settings == null)
-                throw new ArgumentNullException("settings");
-
-            Settings = settings;
+            if (configuration == null)
+                throw new ArgumentNullException("configuration");
 
             _serializer = new JsonYandexApiSerializer();
-            _authProvider = authProvider;
+            Configuration = configuration;
         }
 
         public T Invoke<T>(string method, object param = null, bool financeTokenRequired = false)
@@ -35,8 +32,10 @@ namespace Yandex.Direct.Connectivity
 
             // Creating http-request
 
-            var requestMessage = CreateRequestMessage(method, param, financeTokenRequired);
-            var request = CreateRequest(requestMessage);
+            var authProvider = Configuration.AuthProvider;
+
+            var requestMessage = CreateRequestMessage(method, param, authProvider, financeTokenRequired);
+            var request = CreateRequest(requestMessage, authProvider);
 
             // Invoking the request to server
 
@@ -67,7 +66,8 @@ namespace Yandex.Direct.Connectivity
             return responseObject.Object;
         }
 
-        private string CreateRequestMessage(string method, object param, bool financeTokenRequired)
+        private string CreateRequestMessage(string method, object param, IYandexApiAuthProvider authProvider,
+            bool financeTokenRequired)
         {
             // Creating request message
 
@@ -75,24 +75,24 @@ namespace Yandex.Direct.Connectivity
 
             parameters["method"] = method;
             parameters["param"] = param;
-            parameters["locale"] = Settings.Language;
+            parameters["locale"] = Configuration.Language;
 
             // Adding authentication information into the request message
 
-            if (_authProvider != null)
-                _authProvider.OnRequestMessage(this, method, parameters, financeTokenRequired);
+            if (authProvider != null)
+                authProvider.OnRequestMessage(this, method, parameters, financeTokenRequired);
 
             return SerializeRequestMessage(parameters);
         }
 
-        private HttpWebRequest CreateRequest(string requestMessage)
+        private HttpWebRequest CreateRequest(string requestMessage, IYandexApiAuthProvider authProvider)
         {
-            var request = (HttpWebRequest)WebRequest.Create(Settings.ApiAddress);
+            var request = (HttpWebRequest)WebRequest.Create(Configuration.ServiceUrl);
 
             // Adding authentication information into the http-request
 
-            if (_authProvider != null)
-                _authProvider.OnHttpRequest(this, request);
+            if (authProvider != null)
+                authProvider.OnHttpRequest(this, request);
             
             // Configuring request
 
