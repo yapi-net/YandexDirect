@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <ApplicationVersion Condition="$(ApplicationVersion) == ''">$(BUILD_NUMBER)</ApplicationVersion>
-    <SnkFile Condition="$(ApplicationVersion) == ''"></SnkFile>
+    <SnkFile Condition="$(SnkFile) == ''"></SnkFile>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -15,7 +15,11 @@
   <Target Name="Build">
     <Error Condition="$(ApplicationVersion) == ''" Text="Application version is not set via 'ApplicationVersion' MSBuild property." />
 
-    <SetVersion Files="**\AssemblyInfo.cs" Version="$(ApplicationVersion)" />
+    <ItemGroup>
+      <SetVersionFiles Include="**\AssemblyInfo.cs" />
+    </ItemGroup>
+    
+    <SetVersion Files="@(SetVersionFiles)" Version="$(ApplicationVersion)" />
 
     <SetStrongName ProjectFiles="Yandex.Direct\Yandex.Direct.csproj" UpdateInternalsVisible="true" SnkFile="$(SnkFile)" Condition="$(SnkFile) != ''" />
     <SetStrongName ProjectFiles="Yandex.Direct.Tests\Yandex.Direct.Tests.csproj" SnkFile="$(SnkFile)" Condition="$(SnkFile) != ''" />
