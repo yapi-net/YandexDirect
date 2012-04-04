@@ -1,68 +1,26 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
 
-  <ItemGroup>
-    <ProjectToBuild Include="Yandex.Direct.sln" />
-    <AssemblyInfoFiles Include="**\AssemblyInfo.cs" />
-  </ItemGroup>
-
   <PropertyGroup>
     <ApplicationVersion Condition="$(ApplicationVersion) == ''">$(BUILD_NUMBER)</ApplicationVersion>
-    <LibProjectFolder>Yandex.Direct</LibProjectFolder>
-    <LibProjectFile>Yandex.Direct\Yandex.Direct.csproj</LibProjectFile>
-    <LibProjectTestFile>Yandex.Direct.Tests\Yandex.Direct.Tests.csproj</LibProjectTestFile>
-    <ZipPackageName>Yandex.Direct.$(ApplicationVersion).zip</ZipPackageName>
-    <NuSpecFile>Yandex.Direct.nuspec</NuSpecFile>
+    <SnkFile Condition="$(ApplicationVersion) == ''"></SnkFile>
   </PropertyGroup>
   
   <PropertyGroup>
-    <MSBuildCommunityTasksPath Condition="'$(MSBuildCommunityTasksPath)' == ''">$(MSBuildExtensionsPath)\MSBuildCommunityTasks</MSBuildCommunityTasksPath>
-    <MSBuildCommunityTasksLib>$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.dll</MSBuildCommunityTasksLib>
-    <NuGetMSBuildLib>$(MSBuildExtensionsPath)\NuGet.MSBuild.dll</NuGetMSBuildLib>
     <MayMartTasksLib>Tools\MayMart.MsBuildTasks.dll</MayMartTasksLib>
   </PropertyGroup>
 
-  <UsingTask AssemblyFile="$(MSBuildCommunityTasksLib)" TaskName="MSBuild.Community.Tasks.Zip" />
-  <UsingTask AssemblyFile="$(NuGetMSBuildLib)" TaskName="NuGet.MSBuild.NuGet" />
-  <UsingTask AssemblyFile="$(MayMartTasksLib)" TaskName="MayMart.MsBuildTasks.SetStrongName" />
   <UsingTask AssemblyFile="$(MayMartTasksLib)" TaskName="MayMart.MsBuildTasks.SetVersion" />
+  <UsingTask AssemblyFile="$(MayMartTasksLib)" TaskName="MayMart.MsBuildTasks.SetStrongName" />
 
   <Target Name="Build">
-    <CallTarget Targets="CreateZipPackage;CreateNuGetPackage" />
-  </Target>
-
-  <Target Name="BuildApplication">
     <Error Condition="$(ApplicationVersion) == ''" Text="Application version is not set via 'ApplicationVersion' MSBuild property." />
 
-    <SetVersion Files="@(AssemblyInfoFiles)" Version="$(ApplicationVersion)" />
-    
-    <SetStrongName ProjectFiles="$(LibProjectFile)" UpdateInternalsVisible="true" SnkFile="$(SnkFile)" Condition="$(SnkFile) != ''" />
-    <SetStrongName ProjectFiles="$(LibProjectTestFile)" SnkFile="$(SnkFile)" Condition="$(SnkFile) != ''" />
+    <SetVersion Files="**\AssemblyInfo.cs" Version="$(ApplicationVersion)" />
 
-    <MSBuild Projects="@(ProjectToBuild)" Targets="Build" Properties="Configuration=Release" />
-  </Target>
+    <SetStrongName ProjectFiles="Yandex.Direct\Yandex.Direct.csproj" UpdateInternalsVisible="true" SnkFile="$(SnkFile)" Condition="$(SnkFile) != ''" />
+    <SetStrongName ProjectFiles="Yandex.Direct.Tests\Yandex.Direct.Tests.csproj" SnkFile="$(SnkFile)" Condition="$(SnkFile) != ''" />
 
-  <Target Name="CreateZipPackage" DependsOnTargets="BuildApplication">
-    
-    <Copy SourceFiles="README.md" DestinationFiles="ReadMe.txt" />
-    
-    <ItemGroup>
-      <FilesToZip Include="$(LibProjectFolder)\bin\Release\*.dll" />
-      <FilesToZip Include="$(LibProjectFolder)\bin\Release\*.pdb" />
-      <FilesToZip Include="$(LibProjectFolder)\bin\Release\*.config" />
-      <FilesToZip Include="ReadMe.txt" />
-    </ItemGroup>
-
-    <Zip Files="@(FilesToZip)" WorkingDirectory="$(LibProjectFolder)\bin\Release" ZipFileName="$(ZipPackageName)" />
-  </Target>
-  
-  <Target Name="CreateNuGetPackage">
-    <Error Condition="$(ApplicationVersion) == ''" Text="Application version is not set via 'ApplicationVersion' MSBuild property." />
-
-    <SetVersion Files="$(NuSpecFile)" Version="$(ApplicationVersion)" />
-
-    <NuGet SpecFile="$(NuSpecFile)">
-      <Output TaskParameter="OutputPackage" PropertyName="NuGetPackageFile" />
-    </NuGet>
+    <MSBuild Projects="Yandex.Direct.sln" Targets="Build" Properties="Configuration=Release" />
   </Target>
 
 </Project>
