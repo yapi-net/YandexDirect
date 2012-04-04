@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using Yandex.Direct.Connectivity;
@@ -15,7 +14,7 @@ namespace Yandex.Direct
         public YapiCodeServerException(YandexApiErrorCode errorCode, string error)
             : base(string.Format("Yandex API error, code {0}. {1}", errorCode, error))
         {
-            this.ErrorCode = errorCode;
+            ErrorCode = errorCode;
         }
 
         public YapiCodeServerException()
@@ -33,13 +32,15 @@ namespace Yandex.Direct
         private YapiCodeServerException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
-            this.ErrorCode = (YandexApiErrorCode)info.GetValue(ErrorCodeField, typeof(YandexApiErrorCode));
+            ErrorCode = (YandexApiErrorCode)info.GetValue(ErrorCodeField, typeof(YandexApiErrorCode));
         }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            Contract.Requires<ArgumentNullException>(info != null, "info");
-            info.AddValue(ErrorCodeField, this.ErrorCode);
+            if (info == null)
+                throw new ArgumentNullException("info");
+
+            info.AddValue(ErrorCodeField, ErrorCode);
             base.GetObjectData(info, context);
         }
     }
