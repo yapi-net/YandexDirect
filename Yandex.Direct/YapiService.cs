@@ -123,21 +123,18 @@ namespace Yandex.Direct
         }
 
         public YapiService()
-            : this(YandexDirectConfiguration.LoadFromConfigurationFile())
+            : this(new YandexDirectConfiguration())
         {
         }
 
         public YapiService(IYandexApiAuthProvider authProvider)
-            : this(YandexDirectConfiguration.LoadFromConfigurationFile())
+            : this(new YandexDirectConfiguration(authProvider))
         {
-            Configuration.AuthProvider = authProvider;
         }
 
         public YapiService(IYandexApiAuthProvider authProvider, YandexApiLanguage language)
-            : this(YandexDirectConfiguration.LoadFromConfigurationFile())
+            : this(new YandexDirectConfiguration(authProvider, language))
         {
-            Configuration.AuthProvider = authProvider;
-            Configuration.Language = language;
         }
 
         public int PingApi()

@@ -16,49 +16,57 @@ namespace Yandex.Direct.Configuration
 
         public YandexDirectConfiguration()
         {
+            // Setting defaults
+
             ServiceUrl = new Uri("https://soap.direct.yandex.ru/json-api/v4/");
             Language = YandexApiLanguage.English;
+
+            // Trying to load settings from configuration file
+
+            LoadFromConfigurationFile();
         }
 
         public YandexDirectConfiguration(IYandexApiAuthProvider authProvider)
+            : this()
         {
-            ServiceUrl = new Uri("https://soap.direct.yandex.ru/json-api/v4/");
-            Language = YandexApiLanguage.English;
-
             AuthProvider = authProvider;
         }
 
-        public static YandexDirectConfiguration LoadFromConfigurationFile()
+        public YandexDirectConfiguration(IYandexApiAuthProvider authProvider, YandexApiLanguage language)
+            : this()
         {
-            // Obtaining configuration section from the configuration file
+            AuthProvider = authProvider;
+            Language = language;
+        }
+
+        private void LoadFromConfigurationFile()
+        {
+            // Obtaining configuration section
 
             var configSection = (YandexDirectSection)ConfigurationManager.GetSection("yandex.direct");
 
-            // Creating and configuring authentication provider if specified
+            if (configSection == null)
+                return;
 
-            IYandexApiAuthProvider authProvider;
+            // Loading ServiceUrl and Language if specified
+
+            if (!string.IsNullOrEmpty(configSection.ServiceUrl))
+                ServiceUrl = new Uri(configSection.ServiceUrl);
+
+            if (configSection.Language != null)
+                Language = configSection.Language.Value;
+
+            // Loading authentication provider if specified
 
             if (configSection.AuthProvider.Type != null)
             {
                 var providerType = Type.GetType(configSection.AuthProvider.Type, true);
-                authProvider = (IYandexApiAuthProvider)Activator.CreateInstance(providerType);
+                var authProvider = (IYandexApiAuthProvider)Activator.CreateInstance(providerType);
 
                 authProvider.LoadSettings(configSection.AuthProvider);
+
+                AuthProvider = authProvider;
             }
-            else
-                authProvider = null;
-
-            // Creating configuration object
-
-            var configuration = new YandexDirectConfiguration(authProvider);
-
-            if (!string.IsNullOrEmpty(configSection.ServiceUrl))
-                configuration.ServiceUrl = new Uri(configSection.ServiceUrl);
-
-            if (configSection.Language != null)
-                configuration.Language = configSection.Language.Value;
-
-            return configuration;
         }
     }
 }

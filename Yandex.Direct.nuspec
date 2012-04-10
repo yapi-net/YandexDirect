@@ -6,7 +6,7 @@
     <title>Yandex.Direct API</title>
     <authors>Yapi.NET Project Contributors</authors>
     <description>Yandex.Direct API library for .NET.</description>
-    <projectUrl>https://github.com/yapi-net/YandexDirect</projectUrl>
+    <projectUrl>http://yapi-net.github.com/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>Yandex.Direct Яндекс.Директ Yandex Direct Яндекс Директ API</tags>
     <dependencies>

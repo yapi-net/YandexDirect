@@ -11,7 +11,7 @@ namespace Yandex.Direct.Tests
         [TestMethod]
         public void SettingsCanBeReadFromConfiguration()
         {
-            var configuration = YandexDirectConfiguration.LoadFromConfigurationFile();
+            var configuration = new YandexDirectConfiguration();
 
             Assert.AreEqual(new Uri("http://serviceUrl/"), configuration.ServiceUrl);
             Assert.AreEqual(YandexApiLanguage.Ukrainian, configuration.Language);
