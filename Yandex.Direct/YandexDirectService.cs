@@ -8,7 +8,7 @@ using Yandex.Direct.Connectivity;
 
 namespace Yandex.Direct
 {
-    public partial class YapiService
+    public partial class YandexDirectService
     {
         static class ApiMethod
         {
@@ -111,7 +111,7 @@ namespace Yandex.Direct
 
         public YandexDirectConfiguration Configuration { get; private set; }
 
-        public YapiService(YandexDirectConfiguration configuration)
+        public YandexDirectService(YandexDirectConfiguration configuration)
         {
             if (configuration == null)
                 throw new ArgumentNullException("configuration");
@@ -122,17 +122,17 @@ namespace Yandex.Direct
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, errors) => true;
         }
 
-        public YapiService()
+        public YandexDirectService()
             : this(new YandexDirectConfiguration())
         {
         }
 
-        public YapiService(IYandexApiAuthProvider authProvider)
+        public YandexDirectService(IYandexApiAuthProvider authProvider)
             : this(new YandexDirectConfiguration(authProvider))
         {
         }
 
-        public YapiService(IYandexApiAuthProvider authProvider, YandexApiLanguage language)
+        public YandexDirectService(IYandexApiAuthProvider authProvider, YandexApiLanguage language)
             : this(new YandexDirectConfiguration(authProvider, language))
         {
         }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Yandex.Direct
 {
-    partial class YapiService
+    partial class YandexDirectService
     {
     }
 }

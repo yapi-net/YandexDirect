@@ -58,7 +58,7 @@ namespace Yandex.Direct
             editable.ContactInfo = banner.ContactInfo; //TODO: Copy
 
             editable.SiteLinks = banner.SiteLinks; //TODO: Copy
-            editable.MinusKeywords = banner.MinusKeywords; //TODO: Copy
+            editable.MinusKeywords = new List<string>(banner.MinusKeywords);
 
             editable.Phrases = banner.Phrases.ToEditable().ToList();
 

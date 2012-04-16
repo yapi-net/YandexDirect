@@ -6,7 +6,7 @@ using Yandex.Direct.Serialization;
 
 namespace Yandex.Direct
 {
-    partial class YapiService
+    partial class YandexDirectService
     {
         public BannerInfo GetBanner(int bannerId)
         {

@@ -10,7 +10,7 @@ namespace Yandex.Direct.Tests
         [TestMethod, Description("Calling DeleteBanners with empty bannerIds should fail.")]
         public void GetBannersByIdsWithEmptyBannerIdsShouldFail()
         {
-            var service = new YapiService();
+            var service = new YandexDirectService();
             service.DeleteBanners(1, new int[0]);
         }
     }
