@@ -145,7 +145,7 @@ namespace Yandex.Direct
         public void TestApiConnection()
         {
             if (PingApi() != 1)
-                throw new YapiServerException("Yandex.Direct API ping attempt failed.");
+                throw new YandexConnectionException("Yandex.Direct API ping attempt failed.");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Yandex.Direct
 {
     partial class YandexDirectService
     {
-        public int CreateForecast(string[] phrases, int[] geoIds = null, int[] categoryIds = null)
+        public int CreateNewForecast(string[] phrases, int[] geoIds = null, int[] categoryIds = null)
         {
             if (phrases == null || phrases.Length == 0)
                 throw new ArgumentNullException("phrases");
@@ -22,17 +22,17 @@ namespace Yandex.Direct
             return YandexApiClient.Invoke<ForecastInfo>(ApiMethod.GetForecast, forecastId);
         }
 
-        public List<ForecastStatus> ListForecasts()
+        public List<ForecastStatus> GetForecastList()
         {
             return YandexApiClient.Invoke<List<ForecastStatus>>(ApiMethod.GetForecastList);
         }
 
-        public void DeleteForecast(int forecastReportId)
+        public void DeleteForecastReport(int forecastReportId)
         {
             var result = YandexApiClient.Invoke<int>(ApiMethod.DeleteForecastReport, forecastReportId);
 
             if (result != 1)
-                throw new YapiServerException(string.Format("Плохой ответ. Должен вернуть: 1. Вернул: {0}", result));
+                throw new YandexDirectException("Method DeleteForecastReport failed.");
         }
     }
 }

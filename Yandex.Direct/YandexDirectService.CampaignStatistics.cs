@@ -7,7 +7,7 @@ namespace Yandex.Direct
 {
     partial class YandexDirectService
     {
-        public int CreateReport(NewReportInfo reportInfo)
+        public int CreateNewReport(NewReportInfo reportInfo)
         {
             if (reportInfo == null)
                 throw new ArgumentNullException("reportInfo");
@@ -18,7 +18,7 @@ namespace Yandex.Direct
             return YandexApiClient.Invoke<int>(ApiMethod.CreateNewReport, reportInfo);
         }
 
-        public List<ReportInfo> ListReports()
+        public List<ReportInfo> GetReportList()
         {
             return YandexApiClient.Invoke<List<ReportInfo>>(ApiMethod.GetReportList);
         }
@@ -33,7 +33,7 @@ namespace Yandex.Direct
             var result = YandexApiClient.Invoke<int>(ApiMethod.DeleteReport, reportId);
 
             if (result != 1)
-                throw new YapiServerException(string.Format("Плохой ответ. Должен вернуть: 1. Вернул: {0}", result));
+                throw new YandexDirectException("Method DeleteReport failed.");
         }
     }
 }

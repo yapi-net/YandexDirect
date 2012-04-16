@@ -50,7 +50,7 @@ namespace Yandex.Direct.Connectivity
             }
             catch (Exception ex)
             {
-                throw new YapiServerException("Unable to perform http-request to Yandex API endpoint.", ex);
+                throw new YandexConnectionException("Unable to perform http-request to Yandex API endpoint.", ex);
             }
 
             // Retrieving response
@@ -58,10 +58,10 @@ namespace Yandex.Direct.Connectivity
             var responseObject = _serializer.Deserialize<JsonResponseObject<T>>(responseMessage);
 
             if (responseObject == null)
-                throw new YapiServerException("Not supported server response.");
+                throw new YandexConnectionException("Not supported server response.");
 
             if (responseObject.ErrorCode != YandexApiErrorCode.None)
-                throw new YapiCodeServerException(responseObject.ErrorCode, responseObject.ErrorMessage);
+                throw new YandexDirectException(responseObject.ErrorCode, responseObject.ErrorMessage);
 
             return responseObject.Object;
         }
