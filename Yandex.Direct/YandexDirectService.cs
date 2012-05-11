@@ -8,7 +8,7 @@ using Yandex.Direct.Connectivity;
 
 namespace Yandex.Direct
 {
-    public partial class YandexDirectService
+    public partial class YandexDirectService : IYandexDirectService
     {
         static class ApiMethod
         {

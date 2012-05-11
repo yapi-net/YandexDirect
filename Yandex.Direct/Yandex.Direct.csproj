@@ -133,6 +133,7 @@
     <Compile Include="Domain\Enums\RejectReasonType.cs" />
     <Compile Include="Domain\PhraseCoverageInfo.cs" />
     <Compile Include="Domain\PhraseUserParams.cs" />
+    <Compile Include="IYandexDirectService.cs" />
     <Compile Include="Serialization\YesNo.cs" />
     <Compile Include="Serialization\YesNoArrayConverter.cs" />
     <Compile Include="Serialization\YesNoConverter.cs" />
