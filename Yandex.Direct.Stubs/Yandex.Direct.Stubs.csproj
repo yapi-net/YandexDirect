@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Yandex.Direct</RootNamespace>
-    <AssemblyName>Yandex.Direct.Stub</AssemblyName>
+    <AssemblyName>Yandex.Direct.Stubs</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
